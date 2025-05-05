@@ -1,0 +1,173 @@
+{% load static %}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" rel="stylesheet">
+
+<div class="modal-body">
+    <form id="editExecutiveForm">
+        <div class="container-fluid">
+            <div class="row mb-3">
+                <!-- Executive Photo and Name -->
+                <div class="col-md-4 text-center">
+                    <div class="card shadow-sm p-3 d-flex justify-content-center align-items-center">
+                        {% if executive.profile_image %}
+                            <img src="{{ executive.profile_image.url }}" 
+                                 class="img-fluid rounded-circle border shadow-sm mb-3" 
+                                 style="width: 120px; height: 120px;" 
+                                 alt="Profile Image">
+                        {% else %}
+                            <img src="{% static 'img/user3-128x128.jpg' %}" 
+                                 class="img-fluid rounded-circle border shadow-sm mb-3" 
+                                 style="width: 120px; height: 120px;" 
+                                 alt="Default Profile Image">
+                        {% endif %}
+                        <h5 class="mt-2">{{ executive.get_full_name }}</h5>
+                        <small class="text-muted">{{ executive.designation }}</small>
+                        <input type="file" name="profile_image" class="form-control mt-3">
+                    </div>
+                </div>
+
+                <!-- Vertical Line -->
+                <div class="col-md-1 d-flex justify-content-center align-items-center">
+                    <div style="width: 1px; height: 100%; background-color: #dee2e6;"></div>
+                </div>
+
+                <!-- Executive Details -->
+                <div class="col-md-7">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <label><strong>Username:</strong></label>
+                            <input type="text" name="username" value="{{ executive.username }}" class="form-control">
+                            <label><strong>Email:</strong></label>
+                            <input type="email" name="email" value="{{ executive.email }}" class="form-control">
+                            <label><strong>Contact Number:</strong></label>
+                            <input type="text" name="contact_number" value="{{ executive.contact_number }}" class="form-control">
+                            <label><strong>Alternate Number:</strong></label>
+                            <input type="text" name="alternate_number" value="{{ executive.alternate_number }}" class="form-control">
+                            <label><strong>Gender:</strong></label>
+                            <select name="gender" class="form-control">
+                                <option value="Male" {% if executive.gender == "Male" %}selected{% endif %}>Male</option>
+                                <option value="Female" {% if executive.gender == "Female" %}selected{% endif %}>Female</option>
+                                <option value="Other" {% if executive.gender == "Other" %}selected{% endif %}>Other</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-6">
+                            <label><strong>Department:</strong></label>
+                            <select name="department" class="form-control">
+                                {% for department in departments %}
+                                    <option value="{{ department.id }}" {% if executive.department.id == department.id %}selected{% endif %}>
+                                        {{ department.name }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                            <label><strong>Designation:</strong></label>
+                            <input type="text" name="designation" value="{{ executive.designation }}" class="form-control">
+                            <label><strong>Address:</strong></label>
+                            <textarea name="address" class="form-control">{{ executive.address }}</textarea>
+                            <label><strong>City:</strong></label>
+                            <input type="text" name="city" value="{{ executive.city }}" class="form-control">
+                            <label><strong>State:</strong></label>
+                            <input type="text" name="state" value="{{ executive.state }}" class="form-control">
+                            <label><strong>Country:</strong></label>
+                            <input type="text" name="country" value="{{ executive.country }}" class="form-control">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <label><strong>Notes:</strong></label>
+            <textarea name="notes" class="form-control">{{ executive.notes }}</textarea>
+            <hr>
+            <!-- File inputs for additional images -->
+            <div class="row mt-3">
+                <div class="col-md-4">
+                    <label><strong>Front Aadhar Card:</strong></label>
+                    {% if executive.front_adhar_card %}
+                        <a href="{{ executive.front_adhar_card.url }}" target="_blank" class="d-block mb-2">View Current</a>
+                    {% endif %}
+                    <input type="file" name="front_adhar_card" class="form-control">
+                </div>
+                <div class="col-md-4">
+                    <label><strong>PAN Card:</strong></label>
+                    {% if executive.pan_card %}
+                        <a href="{{ executive.pan_card.url }}" target="_blank" class="d-block mb-2">View Current</a>
+                    {% endif %}
+                    <input type="file" name="pan_card" class="form-control">
+                </div>
+                <div class="col-md-4">
+                    <label><strong>Driving Licence:</strong></label>
+                    {% if executive.driving_licence %}
+                        <a href="{{ executive.driving_licence.url }}" target="_blank" class="d-block mb-2">View Current</a>
+                    {% endif %}
+                    <input type="file" name="driving_licence" class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+    </form>
+</div>
+
+<!-- Modal for displaying images -->
+<div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imageModalLabel">Image Viewer</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <img id="modalImage" src="" class="img-fluid" alt="Document Image">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+<script>
+  // Prevent the parent modal from closing when the image modal is closed
+  $('#imageModal').on('hidden.bs.modal', function () {
+    if ($('#viewExecutiveModal').hasClass('show')) {
+      $('body').addClass('modal-open'); // Reapply the modal-open class to keep the parent modal open
+    }
+  });
+
+  // Handle image viewing
+  $(document).on('click', '.view-image-button', function () {
+    const imageUrl = $(this).data('image-url'); // Get the image URL from the button's data attribute
+    $('#modalImage').attr('src', imageUrl); // Set the image URL in the modal
+    $('#imageModal').modal('show'); // Show the image modal
+  });
+
+  $(document).on('submit', '#editExecutiveForm', function (e) {
+    e.preventDefault(); // Prevent default form submission
+
+    const formData = new FormData(this); // Collect form data
+    const executiveId = {{ executive.id }}; // Get the executive ID
+
+    // Send AJAX request to update the executive details
+    $.ajax({
+      url: `/owner/executives/edit/${executiveId}/`,
+      type: 'POST',
+      data: formData,
+      processData: false,
+      contentType: false,
+      success: function (response) {
+        if (response.status === 'success') {
+          Swal.fire('Success!', response.message, 'success').then(() => {
+            location.reload(); // Reload the page to reflect changes
+          });
+        } else {
+          Swal.fire('Error!', response.message, 'error');
+        }
+      },
+      error: function () {
+        Swal.fire('Error!', 'An error occurred while updating the executive.', 'error');
+      }
+    });
+  });
+</script>

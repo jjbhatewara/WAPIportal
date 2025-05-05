@@ -1,0 +1,866 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Evergreen Computers</title>
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet"
+          href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
+    <!-- IonIcons -->
+    <link rel="stylesheet"
+          href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- DataTables -->
+    <link rel="stylesheet"
+          href="{% static 'plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}">
+    <link rel="stylesheet"
+          href="{% static 'plugins/datatables-responsive/css/responsive.bootstrap4.min.css' %}">
+    <link rel="stylesheet"
+          href="{% static 'plugins/datatables-buttons/css/buttons.bootstrap4.min.css' %}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{% static 'css/adminlte.css' %}">
+  </head>
+  <!--
+`body` tag options:
+
+  Apply one or more of the following classes to to the body tag
+  to get the desired effect
+
+  * sidebar-collapse
+  * sidebar-mini
+-->
+  <body class="hold-transition sidebar-mini">
+    <div class="wrapper">
+      <!-- Navbar -->
+      <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+        <!-- Left navbar links -->
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+          </li>
+          <li class="nav-item d-none d-sm-inline-block">
+            <a href="index3.html" class="nav-link">Home</a>
+          </li>
+          <li class="nav-item d-none d-sm-inline-block">
+            <a href="#" class="nav-link">Contact</a>
+          </li>
+        </ul>
+        <!-- Right navbar links -->
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" data-widget="navbar-search" href="#" role="button">
+              <i class="fas fa-search"></i>
+            </a>
+            <div class="navbar-search-block">
+              <form class="form-inline">
+                <div class="input-group input-group-sm">
+                  <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+                  <div class="input-group-append">
+                    <button class="btn btn-navbar" type="submit">
+                      <i class="fas fa-search"></i>
+                    </button>
+                    <button class="btn btn-navbar" type="button" data-widget="navbar-search">
+                      <i class="fas fa-times"></i>
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+              <i class="fas fa-expand-arrows-alt"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout' %}" role="button">
+              <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <!-- /.navbar -->
+      <!-- Main Sidebar Container -->
+      <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <!-- Brand Logo -->
+        <a href="/owner/home" class="brand-link">
+          <img src="{% static 'img/eglogo.png' %}"
+               alt="AdminLTE Logo"
+               class="brand-image img-circle elevation-3"
+               style="opacity: .8">
+          <span class="brand-text font-weight-light">Evergreen</span>
+        </a>
+        <!-- Sidebar -->
+        <div class="sidebar">
+          <!-- Sidebar user panel (optional) -->
+          <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="image">
+              <img src="{% static 'img/jjb.png' %}"
+                   class="img-circle elevation-2"
+                   alt="User Image">
+            </div>
+            <div class="info">
+              <a href="#" class="d-block">Jinesh Bhatewara</a>
+            </div>
+          </div>
+          <!-- SidebarSearch Form -->
+          {% comment %} <div class="form-inline">
+        <div class="input-group" data-widget="sidebar-search">
+          <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+          <div class="input-group-append">
+            <button class="btn btn-sidebar">
+              <i class="fas fa-search fa-fw"></i>
+            </button>
+          </div>
+        </div>
+          </div> {% endcomment %}
+          <!-- Sidebar Menu -->
+          <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column"
+                data-widget="treeview"
+                role="menu"
+                data-accordion="false">
+              <li class="nav-item">
+                <a href="/owner/dashboard" class="nav-link ">
+                  <i class="nav-icon fas fa-tachometer-alt"></i>
+                  <p>
+                    Dashboard
+                    {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/owner/customers" class="nav-link active">
+                  <i class="nav-icon fas fa-user "></i>
+                  <p>
+                    Customers
+                    {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/owner/executives" class="nav-link ">
+                  <i class="nav-icon fas fa-walking "></i>
+                  <p>
+                    Executives
+                    {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/owner/call" class="nav-link">
+                  <i class="nav-icon fas fa-phone-alt"></i>
+                  <p>
+                    Call
+                    {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/owner/jobs" class="nav-link">
+                  <i class="nav-icon fas fa-copy"></i>
+                  <p>
+                    Jobsheets
+                    {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/owner/amc" class="nav-link">
+                  <i class="nav-icon fas fa-tools"></i>
+                  <p>
+                    AMC
+                    {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/owner/todo" class="nav-link">
+                  <i class="nav-icon fas fa-list-ol"></i>
+                  <p>
+                    To Do List
+                    {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/owner/settings" class="nav-link">
+                  <i class="nav-icon fas fa-cog"></i>
+                  <p>
+                    Settings
+                    {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
+                  </p>
+                </a>
+              </li>
+            </ul>
+          </nav>
+          <!-- /.sidebar-menu -->
+        </div>
+        <!-- /.sidebar -->
+      </aside>
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+          <div class="container-fluid">
+            <div class="row mb-2">
+              <div class="col-sm-6">
+                <h1 class="m-0">Customers</h1>
+              </div>
+              <!-- /.col -->
+              <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                  <li class="breadcrumb-item">
+                    <a href="#">Administrator</a>
+                  </li>
+                  <li class="breadcrumb-item active">Customers</li>
+                </ol>
+              </div>
+              <!-- /.col -->
+            </div>
+            <!-- /.row -->
+          </div>
+          <!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+        <!-- Main content -->
+        <div class="content">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-12">
+                <!-- /.card -->
+                <div class="card">
+                  <div class="card-header">
+                    <h3 class="card-title">Current Customers</h3>
+                    <button type="button"
+                            class="btn btn-success float-right"
+                            data-toggle="modal"
+                            data-target="#newCustomerModal">New Customer</button>
+                    <!-- Modal -->
+                  </div>
+                  <!-- /.card-header -->
+                  <div class="card-body">
+                    <table id="example1" class="table table-bordered table-striped">
+                      <thead>
+                        <tr>
+                          <th>Name</th>
+                          <th>Type</th>
+                          <th>Contact</th>
+                          <th>Action</th>
+                          <th>Note</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for customer in customers %}
+                          <tr>
+                            <td>{{ customer.company_customer_name }}</td>
+                            <td>{{ customer.customer_type }}</td>
+                            <td>{{ customer.contact_number }}</td>
+                            <td>
+                                <button class="btn btn-primary btn-sm btn-edit" data-id="{{ customer.id }}">
+                                <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-danger btn-sm delete-button"
+                                    data-id="{{ customer.id }}">
+                                <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                            <td>{{ customer.notes }}</td>
+                          </tr>
+                        {% endfor %}
+                      </tbody>
+                      {% comment %} <tfoot>
+                  <tr>
+                    <th>Rendering engine</th>
+                    <th>Browser</th>
+                    <th>Platform(s)</th>
+                    <th>Engine version</th>
+                    <th>CSS grade</th>
+                  </tr>
+                      </tfoot> {% endcomment %}
+                    </table>
+                  </div>
+                  <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+              </div>
+              <!-- /.col -->
+            </div>
+          </div>
+          <!-- /.container-fluid -->
+        </div>
+        <!-- /.content -->
+      </div>
+      <!-- /.content-wrapper -->
+      <!-- Control Sidebar -->
+      <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+      </aside>
+      <!-- /.control-sidebar -->
+      <!-- Main Footer -->
+      <footer class="main-footer">
+        <strong>Copyright &copy; 2025-2026 <span style="color: #ff5733; font-style: italic; font-weight: bold;">Jinesh</span>.</strong>
+        All rights reserved.
+        <div class="float-right d-none d-sm-inline-block">
+          <b>Version</b> 1.0.0
+        </div>
+      </footer>
+    </div>
+    <!-- ./wrapper -->
+    <div class="modal fade"
+         id="newCustomerModal"
+         tabindex="-1"
+         role="dialog"
+         aria-labelledby="newCustomerModalLabel"
+         aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="newCustomerModalLabel">Add New Customer</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form id="addCustomerForm" method="POST" action="/owner/customers/add/">
+            {% if messages %}
+              {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show"
+                     role="alert">
+                  {{ message }}
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+              {% endfor %}
+            {% endif %}
+            {% csrf_token %}
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="customerType">Customer Type</label>
+                <select class="form-control" id="customerType" name="customer_type" required>
+                  <option value="" disabled selected>Select Customer Type</option>
+                  {% for type in customer_types %}<option value="{{ type.id }}">{{ type.title }}</option>{% endfor %}
+                </select>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-4">
+                  <label for="customerName">
+                    Company/Customer Name<span style="color: red;">*</span>
+                  </label>
+                  <input type="text"
+                         class="form-control"
+                         id="customerName"
+                         name="name"
+                         placeholder="Name"
+                         required>
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="contactNumber">
+                    Contact Number<span style="color: red;">*</span>
+                  </label>
+                  <input type="tel"
+                         class="form-control"
+                         id="contactNumber"
+                         name="contact_number"
+                         placeholder="Contact"
+                         required>
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="contactPerson">Contact Person</label>
+                  <input type="text"
+                         class="form-control"
+                         id="contactPerson"
+                         name="contact_person"
+                         placeholder="Contact Person">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-4">
+                  <label for="alternateNumber">Alternate Number</label>
+                  <input type="tel"
+                         class="form-control"
+                         id="alternateNumber"
+                         name="alternate_number"
+                         placeholder="Alternate Number">
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="email">Email</label>
+                  <input type="email"
+                         class="form-control"
+                         id="email"
+                         name="email"
+                         placeholder="Email">
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="gstNumber">GST Number</label>
+                  <input type="text"
+                         class="form-control"
+                         id="gstNumber"
+                         name="gst_number"
+                         placeholder="GST Number">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="address">Address</label>
+                  <input type="text"
+                         class="form-control"
+                         id="address"
+                         name="address"
+                         placeholder="Address">
+                </div>
+                <div class="form-group col-md-2">
+                  <label for="area">Area</label>
+                  <input type="text"
+                         class="form-control"
+                         id="area"
+                         name="area"
+                         placeholder="Area">
+                </div>
+                <div class="form-group col-md-2">
+                  <label for="city">City</label>
+                  <input type="text"
+                         class="form-control"
+                         id="city"
+                         name="city"
+                         placeholder="City">
+                </div>
+                <div class="form-group col-md-2">
+                  <label for="state">State</label>
+                  <input type="text"
+                         class="form-control"
+                         id="state"
+                         name="state"
+                         placeholder="State">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-3">
+                  <label for="zip">Zip</label>
+                  <input type="text"
+                         class="form-control"
+                         id="zip"
+                         name="zip"
+                         placeholder="Zip Code">
+                </div>
+                <div class="form-group col-md-3">
+                  <label for="country">Country</label>
+                  <input type="text"
+                         class="form-control"
+                         id="country"
+                         name="country"
+                         placeholder="Country">
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="googleMapUrl">Google Map Url</label>
+                  <div class="input-group">
+                    <input type="url"
+                           class="form-control"
+                           id="googleMapUrl"
+                           name="google_map_url"
+                           placeholder="Google Map Url">
+                    <div class="input-group-append">
+                      <button class="btn btn-info"
+                              type="button"
+                              onclick="window.open(document.getElementById('googleMapUrl').value, '_blank')">
+                        View
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="notes">Notes</label>
+                <textarea class="form-control"
+                          id="notes"
+                          name="notes"
+                          rows="3"
+                          placeholder="Notes"></textarea>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <!-- Edit Customer Modal -->
+    <div class="modal fade" id="editCustomerModal" tabindex="-1" role="dialog" aria-labelledby="editCustomerModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editCustomerModalLabel">Edit Customer</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="editCustomerForm">
+                    {% csrf_token %}
+                    <div class="modal-body">
+                        <input type="hidden" id="editCustomerId" name="customer_id">
+                        <div class="form-group">
+                            <label for="editCustomerType">Customer Type</label>
+                            <select class="form-control" id="editCustomerType" name="customer_type" required>
+                                {% for type in customer_types %}
+                                    <option value="{{ type.id }}">{{ type.title }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="editCustomerName">Company/Customer Name</label>
+                                <input type="text" class="form-control" id="editCustomerName" name="company_customer_name" required>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="editContactNumber">Contact Number</label>
+                                <input type="tel" class="form-control" id="editContactNumber" name="contact_number" required>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="editContactPerson">Contact Person</label>
+                                <input type="text" class="form-control" id="editContactPerson" name="contact_person">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="editAlternateNumber">Alternate Number</label>
+                                <input type="tel" class="form-control" id="editAlternateNumber" name="alternate_number">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="editEmail">Email</label>
+                                <input type="email" class="form-control" id="editEmail" name="email">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="editGstNumber">GST Number</label>
+                                <input type="text" class="form-control" id="editGstNumber" name="gst_number">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="editAddress">Address</label>
+                                <input type="text" class="form-control" id="editAddress" name="address">
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="editArea">Area</label>
+                                <input type="text" class="form-control" id="editArea" name="area">
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="editCity">City</label>
+                                <input type="text" class="form-control" id="editCity" name="city">
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="editState">State</label>
+                                <input type="text" class="form-control" id="editState" name="state">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-3">
+                                <label for="editZip">Zip</label>
+                                <input type="text" class="form-control" id="editZip" name="zip_code">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="editCountry">Country</label>
+                                <input type="text" class="form-control" id="editCountry" name="country">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="editGoogleMapUrl">Google Map URL</label>
+                                <input type="url" class="form-control" id="editGoogleMapUrl" name="google_map_url">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="editNotes">Notes</label>
+                            <textarea class="form-control" id="editNotes" name="notes" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- REQUIRED SCRIPTS -->
+    <!-- jQuery -->
+    <script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+    <!-- Bootstrap -->
+    <script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src= "{% static 'plugins/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'plugins/datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
+    <script src="{% static 'plugins/datatables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'plugins/datatables-buttons/js/dataTables.buttons.min.js' %}"></script>
+    <script src="{% static 'plugins/datatables-buttons/js/buttons.bootstrap4.min.js' %}"></script>
+    <script src= "{% static 'plugins/jszip/jszip.min.js' %}"></script>
+    <script src= "{% static 'plugins/pdfmake/pdfmake.min.js' %}"></script>
+    <script src= "{% static 'plugins/pdfmake/vfs_fonts.js' %}"></script>
+    <script src="{% static 'plugins/datatables-buttons/js/buttons.html5.min.js' %}"></script>
+    <script src="{% static 'plugins/datatables-buttons/js/buttons.print.min.js' %}"></script>
+    <script src="{% static 'plugins/datatables-buttons/js/buttons.colVis.min.js' %}"></script>
+    <!-- AdminLTE -->
+    <script src="{% static 'js/adminlte.js' %}"></script>
+    <div id="loadingSpinner" style="display: none;">
+      <div class="spinner-border text-primary" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+    <!-- OPTIONAL SCRIPTS -->
+
+
+    <script>
+      $(document).ready(function () {
+        $('#addCustomerForm').on('submit', function (e) {
+          e.preventDefault(); // Prevent default form submission
+    
+          // Show loading spinner
+          const submitButton = $(this).find('button[type="submit"]');
+          submitButton.prop('disabled', true).text('Saving...');
+    
+          // Send AJAX request
+          $.ajax({
+            url: "{% url 'add_customer' %}",
+            type: "POST",
+            data: $(this).serialize(),
+            success: function (response) {
+              if (response.status === 'success') {
+                // Show success message using SweetAlert
+                Swal.fire({
+                  title: 'Success!',
+                  text: response.message,
+                  icon: 'success',
+                  confirmButtonText: 'OK'
+                }).then(() => {
+                  location.reload(); // Reload the page to update the table
+                });
+              } else {
+                // Show error message using SweetAlert
+                Swal.fire({
+                  title: 'Error!',
+                  text: response.message,
+                  icon: 'error',
+                  confirmButtonText: 'OK'
+                });
+              }
+            },
+            error: function () {
+              // Show generic error message using SweetAlert
+              Swal.fire({
+                title: 'Error!',
+                text: 'An error occurred while adding the customer.',
+                icon: 'error',
+                confirmButtonText: 'OK'
+              });
+            },
+            complete: function () {
+              // Reset button state
+              submitButton.prop('disabled', false).text('Save');
+            }
+          });
+        });
+      });
+  </script>
+
+  <script>
+  // Add CSRF token to AJAX requests
+  function getCSRFToken() {
+    return document.querySelector('[name=csrfmiddlewaretoken]').value;
+  }
+
+  $.ajaxSetup({
+    beforeSend: function (xhr, settings) {
+      if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+        xhr.setRequestHeader("X-CSRFToken", getCSRFToken());
+      }
+    }
+  });
+
+
+
+{% comment %} $(document).ready(function () {
+$('#addCustomerForm').on('submit', function (e) {
+e.preventDefault(); // Prevent default form submission
+// Show loading spinner
+const submitButton = $(this).find('button[type="submit"]');
+submitButton.prop('disabled', true).text('Saving...');
+// Send AJAX request
+$.ajax({
+url: "{% url 'add_customer' %}",
+type: "POST",
+data: $(this).serialize(),
+success: function (response) {
+// Handle success
+if (response.status === 'success') {
+alert(response.message);
+location.reload(); // Reload the page to update the table
+} else {
+alert(response.message);
+}
+},
+error: function () {
+// Handle error
+alert('An error occurred. Please try again.');
+},
+complete: function () {
+// Reset button state
+submitButton.prop('disabled', false).text('Save');
+}
+});
+});
+}); {% endcomment %}
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+
+  $(document).on('click', '.delete-button', function () {
+    const customerId = $(this).data('id'); // Get the customer ID from the button
+
+    // Show SweetAlert confirmation dialog
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Show loading spinner
+        Swal.fire({
+          title: 'Deleting...',
+          text: 'Please wait while we delete the customer.',
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading();
+          }
+        });
+
+        // Send AJAX request to delete the customer
+        $.ajax({
+          url: `/owner/customers/delete/${customerId}/`,
+          type: 'DELETE',
+          success: function (response) {
+            if (response.status === 'success') {
+              Swal.fire(
+                'Deleted!',
+                response.message,
+                'success'
+              ).then(() => {
+                location.reload(); // Reload the page to update the table
+              });
+            } else {
+              Swal.fire(
+                'Error!',
+                response.message,
+                'error'
+              );
+            }
+          },
+          error: function () {
+            Swal.fire(
+              'Error!',
+              'An error occurred while deleting the customer.',
+              'error'
+            );
+          }
+        });
+      }
+    });
+  });
+
+  // Handle Edit Button Click
+  $(document).on('click', '.btn-edit', function () {
+      const customerId = $(this).data('id'); // Get the customer ID
+      $.ajax({
+          url: `/owner/customers/${customerId}/`, // Fetch customer details
+          type: 'GET',
+          success: function (response) {
+              if (response.status === 'success') {
+                  const customer = response.customer;
+
+                  // Populate the modal with customer details
+                  $('#editCustomerId').val(customer.id);
+                  $('#editCustomerType').val(customer.customer_type_id);
+                  $('#editCustomerName').val(customer.company_customer_name);
+                  $('#editContactNumber').val(customer.contact_number);
+                  $('#editContactPerson').val(customer.contact_person);
+                  $('#editAlternateNumber').val(customer.alternate_number);
+                  $('#editEmail').val(customer.email);
+                  $('#editGstNumber').val(customer.gst_number);
+                  $('#editAddress').val(customer.address);
+                  $('#editArea').val(customer.area);
+                  $('#editCity').val(customer.city);
+                  $('#editState').val(customer.state);
+                  $('#editZip').val(customer.zip_code);
+                  $('#editCountry').val(customer.country);
+                  $('#editGoogleMapUrl').val(customer.google_map_url);
+                  $('#editNotes').val(customer.notes);
+
+                  // Show the modal
+                  $('#editCustomerModal').modal('show');
+              } else {
+                  Swal.fire('Error!', response.message, 'error');
+              }
+          },
+          error: function () {
+              Swal.fire('Error!', 'Failed to fetch customer details.', 'error');
+          }
+      });
+  });
+
+  // Handle Save Changes
+  $('#editCustomerForm').on('submit', function (e) {
+      e.preventDefault(); // Prevent default form submission
+
+      const formData = $(this).serialize(); // Serialize form data
+      const customerId = $('#editCustomerId').val(); // Get the customer ID
+
+      $.ajax({
+          url: `/owner/customers/edit/${customerId}/`, // Backend endpoint for editing customer
+          type: 'POST',
+          data: formData,
+          success: function (response) {
+              if (response.status === 'success') {
+                  Swal.fire('Success!', response.message, 'success').then(() => {
+                      location.reload(); // Reload the page to reflect changes
+                  });
+              } else {
+                  Swal.fire('Error!', response.message, 'error');
+              }
+          },
+          error: function () {
+              Swal.fire('Error!', 'Failed to save customer details.', 'error');
+          }
+      });
+  });
+    </script>
+    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+    <script src="{% static 'js/pages/dashboard3.js' %}"></script>
+    <script>
+  $(function () {
+    $("#").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "buttons": ["copy", "csv", "pdf", "print", "colvis"]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
+  });
+    </script>
+  </body>
+</html>

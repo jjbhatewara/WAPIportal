@@ -1,0 +1,809 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Evergreen Computers</title>
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet"
+          href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
+    <link rel="stylesheet"
+          href="{% static 'plugins/overlayScrollbars/css/OverlayScrollbars.min.css' %}">
+    <!-- IonIcons -->
+    <link rel="stylesheet"
+          href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{% static 'css/adminlte.css' %}">
+    <link rel="stylesheet" href="{% static 'plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}">
+    <link rel="stylesheet" href="{% static 'plugins/datatables-responsive/css/responsive.bootstrap4.min.css' %}">
+    <link rel="stylesheet" href="{% static 'plugins/datatables-buttons/css/buttons.bootstrap4.min.css' %}">
+    
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+  </head>
+  <!--
+`body` tag options:
+
+  Apply one or more of the following classes to to the body tag
+  to get the desired effect
+
+  * sidebar-collapse
+  * sidebar-mini
+-->
+  <body class="hold-transition sidebar-mini">
+    <div class="wrapper">
+      <!-- Navbar -->
+      <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+        <!-- Left navbar links -->
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+          </li>
+          <li class="nav-item d-none d-sm-inline-block">
+            <a href="index3.html" class="nav-link">Home</a>
+          </li>
+          <li class="nav-item d-none d-sm-inline-block">
+            <a href="#" class="nav-link">Contact</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" data-widget="navbar-search" href="#" role="button">
+              <i class="fas fa-search"></i>
+            </a>
+            <div class="navbar-search-block">
+              <form class="form-inline">
+                <div class="input-group input-group-sm">
+                  <input class="form-control form-control-navbar"
+                         type="search"
+                         placeholder="Search"
+                         aria-label="Search">
+                  <div class="input-group-append">
+                    <button class="btn btn-navbar" type="submit">
+                      <i class="fas fa-search"></i>
+                    </button>
+                    <button class="btn btn-navbar" type="button" data-widget="navbar-search">
+                      <i class="fas fa-times"></i>
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+              <i class="fas fa-expand-arrows-alt"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout' %}" role="button">
+              <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <!-- /.navbar -->
+      <!-- Main Sidebar Container -->
+      <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <!-- Brand Logo -->
+        <a href="/owner/home" class="brand-link">
+          <img src="{% static 'img/eglogo.png' %}"
+               alt="AdminLTE Logo"
+               class="brand-image img-circle elevation-3"
+               style="opacity: .8">
+          <span class="brand-text font-weight-light">Evergreen</span>
+        </a>
+        <!-- Sidebar -->
+        <div class="sidebar">
+          <!-- Sidebar user panel (optional) -->
+          <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="image">
+              <img src="{% static 'img/jjb.png' %}"
+                   class="img-circle elevation-2"
+                   alt="User Image">
+            </div>
+            <div class="info">
+              <a href="#" class="d-block">Jinesh Bhatewara</a>
+            </div>
+          </div>
+          <!-- SidebarSearch Form -->
+          {% comment %} <div class="form-inline">
+        <div class="input-group" data-widget="sidebar-search">
+          <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+          <div class="input-group-append">
+            <button class="btn btn-sidebar">
+              <i class="fas fa-search fa-fw"></i>
+            </button>
+          </div>
+        </div>
+          </div> {% endcomment %}
+          <!-- Sidebar Menu -->
+          <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column"
+                data-widget="treeview"
+                role="menu"
+                data-accordion="false">
+              <li class="nav-item">
+                <a href="/owner/dashboard" class="nav-link">
+                  <i class="nav-icon fas fa-tachometer-alt"></i>
+                  <p>
+                    Dashboard
+                    {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/owner/customers" class="nav-link ">
+                  <i class="nav-icon fas fa-user "></i>
+                  <p>
+                    Customers
+                    {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/owner/executives" class="nav-link ">
+                  <i class="nav-icon fas fa-walking "></i>
+                  <p>
+                    Executives
+                    {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/owner/call" class="nav-link">
+                  <i class="nav-icon fas fa-phone-alt"></i>
+                  <p>
+                    Call
+                    {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/owner/jobs" class="nav-link">
+                  <i class="nav-icon fas fa-copy"></i>
+                  <p>
+                    Jobsheets
+                    {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/owner/amc" class="nav-link active">
+                  <i class="nav-icon fas fa-tools"></i>
+                  <p>
+                    AMC
+                    {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/owner/todo" class="nav-link">
+                  <i class="nav-icon fas fa-list-ol"></i>
+                  <p>
+                    To Do List
+                    {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/owner/settings" class="nav-link">
+                  <i class="nav-icon fas fa-cog"></i>
+                  <p>
+                    Settings
+                    {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
+                  </p>
+                </a>
+              </li>
+            </ul>
+          </nav>
+          <!-- /.sidebar-menu -->
+        </div>
+        <!-- /.sidebar -->
+      </aside>
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+          <div class="container-fluid">
+            <div class="row mb-2">
+              <div class="col-sm-6">
+                <h1 class="m-0">AMC</h1>
+              </div>
+              <!-- /.col -->
+              <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                  <li class="breadcrumb-item">
+                    <a href="#">Administrator</a>
+                  </li>
+                  <li class="breadcrumb-item active">AMC</li>
+                </ol>
+              </div>
+              <!-- /.col -->
+            </div>
+            <!-- /.row -->
+          </div>
+          <!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+        <!-- Main content -->
+        <section class="content">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-12">
+                <!-- /.card -->
+                <div class="card">
+                  <div class="card-header">
+                    <h3 class="card-title">All calls</h3>
+                    <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#addAMCModal">
+                      ADD AMC
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="addAMCModal" tabindex="-1" role="dialog" aria-labelledby="addAMCModalLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-xl" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="addAMCModalLabel">Add AMC</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            <form id="addAMCForm">
+                              <div class="form-row">
+                                <div class="form-group col-md-4">
+                                  <label for="customerName">Customer Name</label>
+                                  <select class="form-control" id="customerName" name="customerName" required>
+                                  <option value="" disabled selected>Select Customer</option>
+                                  {% for customer in customers %}
+                                    <option value="{{ customer.id }}">{{ customer.company_customer_name }}</option>
+                                  {% endfor %}
+                                  </select>
+                                </div>
+                                <div class="form-group col-md-4">
+                                  <label for="amcName">AMC Name</label>
+                                  <input type="text" class="form-control" id="amcName" name="amcName" placeholder="Enter AMC Name" required>
+                                </div>
+                                <div class="form-group col-md-4">
+                                  <label for="contactNumber">Contact Number</label>
+                                  <input type="text" class="form-control" id="contactNumber" name="contactNumber" placeholder="Enter Contact Number" readonly>
+                                </div>
+                              </div>
+                              <div class="form-row">
+                                <div class="form-group col-md-4">
+                                  <label for="amcDocNo">AMC Doc No</label>
+                                  <input type="text" class="form-control" id="amcDocNo" name="amcDocNo" placeholder="Enter AMC Doc No" required>
+                                </div>
+                                <div class="form-group col-md-4">
+                                  <label for="amcCategory">AMC Category</label>
+                                  <select class="form-control" id="amcCategory" name="amcCategory" required>
+                                    <option value="Service AMC">Service AMC</option>
+                                    <option value="Labor AMC">Labor AMC</option>
+                                  </select>
+                                </div>
+                                <div class="form-group col-md-4">
+                                  <label for="renewStatus">Renew Status</label>
+                                  <select class="form-control" id="renewStatus" name="renewStatus" required>
+                                    <option value="Active">Active</option>
+                                    <option value="Inactive">Inactive</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="form-row">
+                                <div class="form-group col-md-4">
+                                  <label for="startingDate">Starting Date</label>
+                                  <input type="date" class="form-control" id="startingDate" name="startingDate" required>
+                                </div>
+                                <div class="form-group col-md-4">
+                                  <label for="endDate">End Date</label>
+                                  <input type="date" class="form-control" id="endDate" name="endDate" required>
+                                </div>
+                                <div class="form-group col-md-4">
+                                  <label for="numberOfServices">Number of Services</label>
+                                  <input type="number" class="form-control" id="numberOfServices" name="numberOfServices" placeholder="Enter Number of Services" max="52" required>
+                                </div>
+                              </div>
+                              <div class="form-row">
+                                <div class="form-group col-md-6">
+                                  <label for="termsAndConditions">Terms and Conditions</label>
+                                  <input type="text" class="form-control" id="termsAndConditions" name="termsAndConditions" value="Default">
+                                </div>
+                                <div class="form-group col-md-6">
+                                  <label for="gstNumber">GST Number</label>
+                                  <input type="text" class="form-control" id="gstNumber" name="gstNumber" placeholder="Enter GST Number">
+                                </div>
+                              </div>
+                              <div class="form-row">
+                                <div class="form-group col-md-4">
+                                  <label for="address">Address</label>
+                                  <input type="text" class="form-control" id="address" name="address" placeholder="Enter Address">
+                                </div>
+                                <div class="form-group col-md-2">
+                                  <label for="area">Area</label>
+                                  <input type="text" class="form-control" id="area" name="area" placeholder="Enter Area">
+                                </div>
+                                <div class="form-group col-md-2">
+                                  <label for="city">City</label>
+                                  <input type="text" class="form-control" id="city" name="city" placeholder="Enter City">
+                                </div>
+                                <div class="form-group col-md-2">
+                                  <label for="state">State</label>
+                                  <input type="text" class="form-control" id="state" name="state" placeholder="Enter State">
+                                </div>
+                                <div class="form-group col-md-2">
+                                  <label for="zip">Zip</label>
+                                  <input type="text" class="form-control" id="zip" name="zip" placeholder="Enter Zip">
+                                </div>
+                                <div class="form-group col-md-2">
+                                  <label for="country">Country</label>
+                                  <input type="text" class="form-control" id="country" name="country" placeholder="Enter Country">
+                                </div>
+                              </div>
+                              <div class="form-row">
+                                <div class="form-group col-md-10">
+                                  <label for="googleMapUrl">Google Map URL</label>
+                                  <input type="url" class="form-control" id="googleMapUrl" name="googleMapUrl" placeholder="Enter Google Map URL">
+                                </div>
+                                <div class="form-group col-md-2 align-self-end">
+                                  <button type="button" class="btn btn-info btn-block" onclick="window.open(document.getElementById('googleMapUrl').value, '_blank')">View</button>
+                                </div>
+                              </div>
+                              <div class="form-row">
+                                <div class="form-group col-md-6">
+                                  <label for="amcNotes">AMC Notes</label>
+                                  <textarea class="form-control" id="amcNotes" name="amcNotes" rows="3" placeholder="Enter AMC Notes"></textarea>
+                                </div>
+                                <div class="form-group col-md-6">
+                                  <label for="servicesNotes">Services Notes</label>
+                                  <textarea class="form-control" id="servicesNotes" name="servicesNotes" rows="3" placeholder="Enter Services Notes"></textarea>
+                                </div>
+                              </div>
+                            </form>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary" id="createAMCButton" form="addAMCForm">Create</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Modal -->
+                  </div>
+                  <!-- /.card-header -->
+                  <div class="card-body">
+                    <table id="amcTable" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>AMC Details</th>
+                                <th>Current Call</th>
+                                <th>Status</th>
+                                <th>GST</th>
+                                <th>Contact</th>
+                                <th>ACTIONS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for amc in amcs %}
+                            <tr>
+                                <td>
+                                  <span style="font-style: italic; color: #28a745;">Customer: {{ amc.customer__company_customer_name }}</span>
+                                  <br>
+                                  <span style="font-weight: bold; color: #007bff;">{{ amc.amc_name }}</span>
+                                  <br>                                  
+                                  <span style="color: #6c757d;">Doc No: {{ amc.amc_doc_no }}</span>
+                                </td>
+                                <td>0/{{ amc.number_of_services }}</td>
+                                <td>
+                                    {% if amc.renew_status == "Active" %}
+                                    <span class="badge badge-success">ACTIVE</span>
+                                    {% else %}
+                                    <span class="badge badge-danger">INACTIVE</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ amc.gst_number|default:"N/A" }}</td>
+                                <td>{{ amc.contact_number }}</td>
+                                <td>
+                                    <i class="fas fa-edit btn btn-primary btn-sm btn-edit" data-id="{{ amc.id }}"></i>
+                                    <a href="/owner/amc/delete/{{ amc.id }}/" class="btn btn-danger btn-sm btn-delete">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                  </div>
+                  <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+              </div>
+              <!-- /.col -->
+            </div>
+          </div>
+        </section>
+        <!-- /.content -->
+      </div>
+      <!-- /.content-wrapper -->
+      <!-- Edit AMC Modal -->
+      <div class="modal fade" id="editAMCModal" tabindex="-1" role="dialog" aria-labelledby="editAMCModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editAMCModalLabel">Edit AMC</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="editAMCForm">
+                        <input type="hidden" id="editAMCId" name="amc_id">
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="editAMCName">AMC Name</label>
+                                <input type="text" class="form-control" id="editAMCName" name="amc_name" required>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="editContactNumber">Contact Number</label>
+                                <input type="text" class="form-control" id="editContactNumber" name="contact_number" readonly>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="editAMCDocNo">AMC Doc No</label>
+                                <input type="text" class="form-control" id="editAMCDocNo" name="amc_doc_no" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="editAMCCategory">AMC Category</label>
+                                <select class="form-control" id="editAMCCategory" name="amc_category" required>
+                                    <option value="Service AMC">Service AMC</option>
+                                    <option value="Labor AMC">Labor AMC</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="editRenewStatus">Renew Status</label>
+                                <select class="form-control" id="editRenewStatus" name="renew_status" required>
+                                    <option value="Active">Active</option>
+                                    <option value="Inactive">Inactive</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="editNumberOfServices">Number of Services</label>
+                                <input type="number" class="form-control" id="editNumberOfServices" name="number_of_services" max="52" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="editStartingDate">Starting Date</label>
+                                <input type="date" class="form-control" id="editStartingDate" name="starting_date" required>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="editEndDate">End Date</label>
+                                <input type="date" class="form-control" id="editEndDate" name="end_date" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="editAMCNotes">AMC Notes</label>
+                                <textarea class="form-control" id="editAMCNotes" name="amc_notes" rows="3" placeholder="Enter AMC Notes"></textarea>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="editServicesNotes">Services Notes</label>
+                                <textarea class="form-control" id="editServicesNotes" name="services_notes" rows="3" placeholder="Enter Services Notes"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" id="saveAMCButton" form="editAMCForm">Save Changes</button>
+                </div>
+            </div>
+        </div>
+      </div>
+      <!-- /.modal -->
+      <!-- Control Sidebar -->
+      <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+      </aside>
+      <!-- /.control-sidebar -->
+      <!-- Main Footer -->
+      <footer class="main-footer">
+        <strong>Copyright &copy; 2025-2026 <span style="color: #ff5733; font-style: italic; font-weight: bold;">Jinesh</span>.</strong>
+        All rights reserved.
+        <div class="float-right d-none d-sm-inline-block">
+          <b>Version</b> 1.0.0
+        </div>
+      </footer>
+    </div>
+    <!-- ./wrapper -->
+    <!-- REQUIRED SCRIPTS -->
+    <!-- jQuery -->
+    <script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+    <!-- Bootstrap -->
+    <script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js' %}"></script>
+    <!-- AdminLTE -->
+    <script src="{% static 'js/adminlte.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- OPTIONAL SCRIPTS -->
+    {% comment %} <script src="{% static 'plugins/chart.js/Chart.min.js' %}"></script> {% endcomment %}
+    <script src="{% static 'js/pages/dashboard3.js' %}"></script>
+    <script src="{% static 'plugins/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'plugins/datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
+    <script src="{% static 'plugins/datatables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'plugins/datatables-buttons/js/dataTables.buttons.min.js' %}"></script>
+    <script src="{% static 'plugins/datatables-buttons/js/buttons.bootstrap4.min.js' %}"></script>
+    <script src= "{% static 'plugins/jszip/jszip.min.js' %}"></script>
+    <script src= "{% static 'plugins/pdfmake/pdfmake.min.js' %}"></script>
+    <script src= "{% static 'plugins/pdfmake/vfs_fonts.js' %}"></script>
+    <script src="{% static 'plugins/datatables-buttons/js/buttons.html5.min.js' %}"></script>
+    <script src="{% static 'plugins/datatables-buttons/js/buttons.print.min.js' %}"></script>
+    <script src="{% static 'plugins/datatables-buttons/js/buttons.colVis.min.js' %}"></script>
+    <!-- AdminLTE -->
+    <script src="{% static 'js/adminlte.js' %}"></script>
+    <!-- OPTIONAL SCRIPTS -->
+    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+    <script src="{% static 'js/pages/dashboard3.js' %}"></script>
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+
+    $(document).ready(function () {
+        // Initialize DataTable
+        $("#amcTable").DataTable({
+            responsive: true,
+            lengthChange: false,
+            autoWidth: false,
+            buttons: ["copy", "csv", "pdf", "print", "colvis"],
+            order: [] // Disable initial sorting
+        }).buttons().container().appendTo('#amcTable_wrapper .col-md-6:eq(0)');
+    });
+    </script>
+
+    <script>
+    $(document).ready(function () {
+        // Handle customer selection
+        $("#customerName").on("change", function () {
+            const customerId = $(this).val(); // Get the selected customer ID
+
+            if (customerId) {
+                // Send AJAX request to fetch customer details
+                $.ajax({
+                    url: `/owner/customers/${customerId}/`, // Backend API endpoint
+                    type: "GET",
+                    success: function (response) {
+                        if (response.status === "success") {
+                            const customer = response.customer;
+
+                            // Populate the form fields with customer details
+                            $("#contactNumber").val(customer.contact_number);
+                            $("#gstNumber").val(customer.gst_number);
+                            $("#address").val(customer.address);
+                            $("#area").val(customer.area);
+                            $("#city").val(customer.city);
+                            $("#state").val(customer.state);
+                            $("#zip").val(customer.zip_code);
+                            $("#googleMapUrl").val(customer.google_map_url);
+                        } else {
+                            Swal.fire("Error!", response.message, "error");
+                        }
+                    },
+                    error: function () {
+                        Swal.fire("Error!", "Failed to fetch customer details.", "error");
+                    },
+                });
+            } else {
+                // Clear the form fields if no customer is selected
+                $("#contactNumber").val("");
+                $("#gstNumber").val("");
+                $("#address").val("");
+                $("#area").val("");
+                $("#city").val("");
+                $("#state").val("");
+                $("#zip").val("");
+                $("#googleMapUrl").val("");
+            }
+        });
+    });
+    </script>
+
+    <script>
+    $(document).ready(function () {
+        // Handle form submission
+        $("#addAMCForm").on("submit", function (e) {
+            e.preventDefault(); // Prevent default form submission
+
+            // Show loading indicator
+            const createButton = $("#createAMCButton");
+            createButton.prop("disabled", true).text("Creating...");
+
+            // Collect form data
+            const formData = $(this).serialize();
+
+            // Send AJAX request to the backend
+            $.ajax({
+                url: "/owner/amc/add/", // Backend API endpoint
+                type: "POST",
+                data: formData,
+                success: function (response) {
+                    if (response.status === "success") {
+
+                      
+                        // Show success message
+                        Swal.fire("Success!", response.message, "success").then(() => {
+                            // Close the modal
+                            $("#addAMCModal").modal("hide");
+
+                            // Optionally, update the AMC table dynamically
+                            const newRow = `
+                                <tr>
+                                    <td>${$("#amcName").val()}<br>Doc No: ${$("#amcDocNo").val()}</td>
+                                    <td>0/${$("#numberOfServices").val()}</td>
+                                    <td><span class="badge badge-success">${$("#renewStatus").val().toUpperCase()}</span></td>
+                                    <td>${$("#gstNumber").val() || "N/A"}</td>
+                                    <td>${$("#contactNumber").val()}</td>
+                                    <td>
+                                        <i class="fas fa-edit btn btn-primary btn-sm"></i>
+                                        <a href="#" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                            `;
+                            $("#amcTable tbody").append(newRow);
+
+                            // Reset the form
+                            $("#addAMCForm")[0].reset();
+                        });
+                    } else {
+                        // Show error message
+                        Swal.fire("Error!", response.message, "error");
+                    }
+                },
+                error: function () {
+                    // Show error message
+                    Swal.fire("Error!", "An error occurred while creating the AMC.", "error");
+                },
+                complete: function () {
+                    // Reset the button state
+                    createButton.prop("disabled", false).text("Create");
+                },
+            });
+        });
+    });
+    </script>
+
+    <script>
+    $(document).ready(function () {
+        // Handle delete button click
+        $(document).on("click", ".btn-delete", function (e) {
+            e.preventDefault(); // Prevent default link behavior
+
+            const deleteUrl = $(this).attr("href"); // Get the delete URL
+            const row = $(this).closest("tr"); // Get the table row to remove after deletion
+
+            // Show SweetAlert confirmation dialog
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Yes, delete it!",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Trigger the API call to delete the item
+                    $.ajax({
+                        url: deleteUrl,
+                        type: "DELETE",
+                        success: function (response) {
+                            if (response.status === "success") {
+                                // Show success message
+                                Swal.fire("Deleted!", response.message, "success").then(() => {
+                                    // Remove the row from the table
+                                    row.remove();
+                                });
+                            } else {
+                                // Show error message
+                                Swal.fire("Error!", response.message, "error");
+                            }
+                        },
+                        error: function () {
+                            // Show error message
+                            Swal.fire("Error!", "An error occurred while deleting the item.", "error");
+                        },
+                    });
+                }
+            });
+        });
+    });
+    </script>
+
+    <script>
+    $(document).ready(function () {
+        // Handle edit button click
+        $(document).on("click", ".btn-edit", function () {
+            const amcId = $(this).data("id"); // Get the AMC ID
+
+            // Fetch AMC details from the backend
+            $.ajax({
+                url: `/owner/amc/${amcId}/`, // Backend API endpoint
+                type: "GET",
+                success: function (response) {
+                    if (response.status === "success") {
+                        const amc = response.amc;
+
+                        // Populate the modal with AMC details
+                        $("#editAMCId").val(amc.id);
+                        $("#editAMCName").val(amc.amc_name);
+                        $("#editContactNumber").val(amc.contact_number);
+                        $("#editAMCDocNo").val(amc.amc_doc_no);
+                        $("#editAMCCategory").val(amc.amc_category);
+                        $("#editRenewStatus").val(amc.renew_status);
+                        $("#editNumberOfServices").val(amc.number_of_services);
+                        $("#editStartingDate").val(amc.starting_date);
+                        $("#editEndDate").val(amc.end_date);
+                        $("#editAMCNotes").val(amc.amc_notes);
+                        $("#editServicesNotes").val(amc.services_notes);
+
+                        // Show the modal
+                        $("#editAMCModal").modal("show");
+                    } else {
+                        Swal.fire("Error!", response.message, "error");
+                    }
+                },
+                error: function () {
+                    Swal.fire("Error!", "Failed to fetch AMC details.", "error");
+                },
+            });
+        });
+
+        // Handle save button click
+        $("#editAMCForm").on("submit", function (e) {
+            e.preventDefault(); // Prevent default form submission
+
+            // Show loading indicator
+            const saveButton = $("#saveAMCButton");
+            saveButton.prop("disabled", true).text("Saving...");
+
+            // Collect form data
+            const formData = $(this).serialize();
+
+            // Send AJAX request to update the AMC
+            $.ajax({
+                url: `/owner/amc/edit/${$("#editAMCId").val()}/`, // Backend API endpoint
+                type: "POST",
+                data: formData,
+                success: function (response) {
+                    if (response.status === "success") {
+                        // Show success message
+                        Swal.fire("Success!", response.message, "success").then(() => {
+                            // Close the modal
+                            $("#editAMCModal").modal("hide");
+
+                            // Reload the page or update the table dynamically
+                            location.reload();
+                        });
+                    } else {
+                        // Show error message
+                        Swal.fire("Error!", response.message, "error");
+                    }
+                },
+                error: function () {
+                    Swal.fire("Error!", "An error occurred while saving the AMC.", "error");
+                },
+                complete: function () {
+                    // Reset the button state
+                    saveButton.prop("disabled", false).text("Save Changes");
+                },
+            });
+        });
+    });
+    </script>
+  </body>
+</html>
