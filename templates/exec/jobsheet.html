@@ -1,0 +1,577 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Evergreen Computers</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback" />
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'plugins/overlayScrollbars/css/OverlayScrollbars.min.css' %}" />
+    <!-- IonIcons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{% static 'css/adminlte.css' %}" />
+    <link rel="stylesheet" href="{% static 'plugins/select2/css/select2.min.css' %}">
+    <link rel="stylesheet" href="{% static 'plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css' %}">
+    <style>
+        .profile-image {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+        }
+        
+        .note-container {
+            display: flex;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .note-container strong {
+            margin-right: 5px;
+        }
+        
+        .note-preview {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            max-width: 100%;
+            padding-right: 60px;
+            /* Added padding to prevent overlap */
+        }
+        
+        .read-more {
+            display: none;
+            position: absolute;
+            bottom: 0;
+            right: 10px;
+            /* Adjusted positioning for better alignment */
+            background-color: white;
+            /* Ensures visibility */
+            padding: 0 5px;
+            z-index: 1;
+            /* Ensures it appears above the text */
+        }
+        
+        .note-overflow .read-more {
+            display: inline;
+        }
+        
+        .note-full {
+            display: none;
+            white-space: normal;
+            word-wrap: break-word;
+        }
+        
+        .note-expanded .note-full {
+            display: inline;
+        }
+        
+        .note-expanded .note-preview {
+            display: none;
+        }
+        
+        .brand-image {
+            height: 50px;
+            width: 50px;
+            color: #ff5733;
+            font-style: italic;
+            font-weight: bold;
+        }
+        
+        .modal-header .close {
+            font-size: 1.5rem;
+        }
+        
+        .card {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-body {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .note-container {
+            margin-bottom: auto;
+            /* Push the buttons to the bottom */
+        }
+        
+        .btn-group {
+            margin-top: auto;
+            /* Ensure buttons stay at the bottom */
+        }
+        
+        img {
+            height: auto;
+            width: auto;
+        }
+        
+        .wide-select {
+            width: 75%;
+            /* Adjusted width to 50% for better responsiveness */
+        }
+        
+        .content-wrapper {
+            background-color: #f8f9fa;
+            /* Subtle light gray background */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .filters {
+            background-color: #ffffff;
+            /* White background for filters */
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+
+<body class="hold-transition sidebar-mini">
+    <div class="wrapper">
+        <!-- Navbar -->
+        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+            <!-- Left navbar links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a href="index3.html" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a href="#" class="nav-link">Contact</a>
+                </li>
+            </ul>
+
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="navbar-search" href="#" role="button">
+                        <i class="fas fa-search"></i>
+                    </a>
+                    <div class="navbar-search-block">
+                        <form class="form-inline">
+                            <div class="input-group input-group-sm">
+                                <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search" />
+                                <div class="input-group-append">
+                                    <button class="btn btn-navbar" type="submit">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                    <button class="btn btn-navbar" type="button" data-widget="navbar-search">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                        <i class="fas fa-expand-arrows-alt"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}" role="button">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <!-- /.navbar -->
+
+        <!-- Main Sidebar Container -->
+        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+            <!-- Brand Logo -->
+            <a href="/owner/home" class="brand-link">
+                <img src="{% static 'img/eglogo.png' %}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" height="50" width="50" />
+                <span class="brand-text font-weight-light">Evergreen</span>
+            </a>
+
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <!-- Sidebar user panel (optional) -->
+
+                <div class="user-panel mt-3 pb-3 mb-3 d-flex align-items-center">
+                    <div class="image">
+                        {% if request.user.profile_image %}
+                        <img src="{{ request.user.profile_image.url }}" class="img-circle elevation-2 profile-image" alt="User Image" height="100" width="100" /> {% else %}
+                        <img src="/media/executives/profiles/default.jpg" class="img-circle elevation-2 profile-image" alt="Default User Image" height="100" width="100" /> {% endif %}
+                    </div>
+                    <div class="info ml-2">
+                        <a href="#" class="d-block">{{request.user.get_full_name }}</a>
+                    </div>
+                </div>
+
+                <!-- SidebarSearch Form -->
+
+                <!-- Sidebar Menu -->
+                <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                        <li class="nav-item">
+                            <a href="/owner/dashboard" class="nav-link">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>Dashboard</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/exec/calllist" class="nav-link ">
+                                <i class="nav-icon fas fa-user"></i>
+                                <p>Call List</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/exec/jobsheet" class="nav-link active">
+                                <i class="nav-icon fas fa-walking"></i>
+                                <p>Jobsheets</p>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- /.sidebar-menu -->
+            </div>
+            <!-- /.sidebar -->
+        </aside>
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <div class="container mt-4">
+                <div class="filters mb-4">
+                    <div class="row align-items-center">
+                        <div class="col-md-6 d-flex align-items-center">
+                            <label for="dateRange" class="mr-2">Date Range:</label>
+                            <input type="date" id="startDate" class="form-control d-inline-block w-auto mr-2" value="{{ today|date:'Y-m-d' }}">
+                            <span>to</span>
+                            <input type="date" id="endDate" class="form-control d-inline-block w-auto ml-2" value="{{ future_date|date:'Y-m-d' }}">
+                        </div>
+                        <div class="col-md-6 d-flex align-items-center">
+                            <label for="statusFilter" class="mr-2">Status:</label>
+                            <select id="statusFilter" class="form-control select wide-select" multiple>
+                                <option value="Pending" selected>Pending</option>
+                                <option value="Completed">Completed</option>
+                                <option value="Rejected">Rejected</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div id="dataCards" class="row">
+                    {% for jobs in jobsheets %}
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="card shadow h-100">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <h5 class="font-weight-bold">
+                                            {{ jobs.customer__company_customer_name }}
+                                        </h5>
+                                        <small class="text-muted">Job No: {{ jobs.job_sheet_no }}</small>
+                                    </div>
+                                    <div class="text-right">
+                                        <span class="badge {% if jobs.job_status == 'Pending' %}badge-primary {% else %}badge-secondary{% endif %}">
+                                            {{ jobs.job_status }}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <p class="mt-2 mb-1">
+                                    <i class="fas fa-map-marker-alt mr-2"></i>{{ jobs.customer__address }}
+                                </p>
+                                {% comment %} <p class="mb-1">
+                                    <i class="fas fa-calendar-alt mr-2"></i>{{ jobs.attend_date|date:"Y-m-d, H:i" }}
+                                </p> {% endcomment %}
+
+                                <p class="mb-2 note-container">
+                                    <strong>Note:</strong>
+                                    <span class="note-preview">{{ jobs.notes }}</span>
+                                    <a href="#" class="read-more" data-toggle="modal" data-target="#noteModal" onclick="openNoteModal(`{{ jobs.notes|escapejs }}`); return false;">Read more</a>
+                                </p>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="noteModal" tabindex="-1" role="dialog" aria-labelledby="noteModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="noteModalLabel">Full Note</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">×</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body" id="noteModalBody">
+                                                <!-- Full note content will be injected here -->
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="btn-group" role="group">
+                                    <a href="tel:{{ jobs.customer__contact_number }}" class="btn btn-outline-primary btn-sm">
+                                        <i class="fas fa-phone"></i> Call
+                                    </a>
+                                    <a href="{{ jobs.customer__google_map_url }}" target="_blank" class="btn btn-outline-info btn-sm">
+                                        <i class="fas fa-map-marked-alt"></i> Navigate
+                                    </a>
+                                    <button class="btn btn-success btn-sm" onclick="handleAction('Complete', '{{ jobs.id }}')">
+                                        <i class="fas fa-check-circle"></i> Complete
+                                    </button>
+                                    <button class="btn btn-danger btn-sm" onclick="handleAction('Cancel', '{{ jobs.id }}')">
+                                        <i class="fas fa-times-circle"></i> Cancel
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+        </aside>
+        <!-- /.control-sidebar -->
+
+        <!-- Main Footer -->
+        <footer class="main-footer">
+            <strong>Copyright © 2025-2026
+                <span class="brand-image">Jinesh</span>.</strong> All rights reserved.
+            <div class="float-right d-none d-sm-inline-block">
+                <b>Version</b> 1.0.0
+            </div>
+        </footer>
+    </div>
+    <!-- ./wrapper -->
+
+    <!-- REQUIRED SCRIPTS -->
+
+    <!-- jQuery -->
+    <script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+
+    <!-- Bootstrap -->
+    <script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js' %}"></script>
+
+    <!-- AdminLTE -->
+    <script src="{% static 'js/adminlte.js' %}"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
+    <!-- OPTIONAL SCRIPTS -->
+
+    <script src="{% static 'js/pages/dashboard3.js' %}"></script>
+    <script src="{% static 'plugins/select2/js/select2.full.min.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('.select').select2({
+                theme: 'bootstrap4',
+                placeholder: 'Select Status',
+                allowClear: true
+            });
+
+
+
+            // Ensure change event is triggered for Select2
+            // Ensure change event is triggered for Select2
+
+        });
+
+        function toggleNoteVisibility(link) {
+            const notePreview = link.previousElementSibling.querySelector('.note-preview');
+            const noteFull = link.previousElementSibling.querySelector('.note-full');
+
+            if (noteFull.classList.contains('d-none')) {
+                noteFull.classList.remove('d-none');
+                notePreview.classList.add('d-none');
+                link.textContent = 'Read less';
+            } else {
+                noteFull.classList.add('d-none');
+                notePreview.classList.remove('d-none');
+                link.textContent = 'Read more';
+            }
+        }
+
+        function toggleNoteExpansion(link) {
+            const noteContainer = link.closest('.note-container');
+            if (noteContainer.classList.contains('note-expanded')) {
+                noteContainer.classList.remove('note-expanded');
+                link.textContent = 'Read more';
+            } else {
+                noteContainer.classList.add('note-expanded');
+                link.textContent = 'Read less';
+            }
+        }
+
+        function openNoteModal(noteContent) {
+            const modalBody = document.getElementById('noteModalBody');
+            modalBody.textContent = noteContent;
+        }
+
+        function checkNoteOverflow(noteContainer) {
+            const notePreview = noteContainer.querySelector('.note-preview');
+            const readMoreLink = noteContainer.querySelector('.read-more');
+
+            if (notePreview.scrollWidth > notePreview.clientWidth) {
+                noteContainer.classList.add('note-overflow');
+                readMoreLink.style.display = 'inline';
+            } else {
+                noteContainer.classList.remove('note-overflow');
+                readMoreLink.style.display = 'none';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.note-container').forEach(checkNoteOverflow);
+        });
+
+        // Define fetchFilteredData globally
+        function fetchFilteredData() {
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
+            const statuses = Array.from(document.getElementById('statusFilter').selectedOptions).map(option => option.value);
+            const url = `/exec/jobsheet?start_date=${startDate}&end_date=${endDate}&statuses=${statuses.join(',')}`;
+
+            fetch(url, {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                const cardsContainer = document.getElementById('dataCards');
+                cardsContainer.innerHTML = ''; // Clear existing cards
+
+                data.calls.forEach(job => {
+                    const card = `
+                        <div class="col-md-6 col-lg-4 mb-4">
+                            <div class="card shadow h-100">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <h5 class="font-weight-bold">${job.customer__company_customer_name}</h5>
+                                            <small class="text-muted">Doc No: ${job.job_document_number}</small>
+                                        </div>
+                                        <div class="text-right">
+                                            <span class="badge ${job.priority === 'High' ? 'badge-danger' : job.priority === 'Medium' ? 'badge-warning' : 'badge-success'}">${job.priority}</span>
+                                            <span class="badge ${job.job_status === 'Pending' ? 'badge-primary' : 'badge-secondary'}">${job.job_status}</span>
+                                        </div>
+                                    </div>
+                                    <p class="mt-2 mb-1"><i class="fas fa-map-marker-alt mr-2"></i>${job.customer__address}</p>
+                                    <p class="mb-1"><i class="fas fa-phone mr-2"></i>${job.customer__contact_number}</p>
+                                    <p class="mb-1"><i class="fas fa-calendar-alt mr-2"></i>${job.attend_date}</p>
+                                    <p class="mb-2 note-container">
+                                        <strong>Note:</strong>
+                                        <span class="note-preview">${job.notes}</span>
+                                        <a href="#" class="read-more" data-toggle="modal" data-target="#noteModal" onclick="openNoteModal('${job.notes}'); return false;">Read more</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>`;
+                    cardsContainer.insertAdjacentHTML('beforeend', card);
+                });
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const startDate = document.getElementById('startDate');
+            const endDate = document.getElementById('endDate');
+            const statusFilter = document.getElementById('statusFilter');
+
+            startDate.addEventListener('change', fetchFilteredData);
+            endDate.addEventListener('change', fetchFilteredData);
+            $('#statusFilter').on('change', function() {
+                fetchFilteredData();
+            });
+        });
+
+        function handleAction(action, jobId) {
+            Swal.fire({
+                title: `Are you sure you want to ${action} this job?`,
+                input: 'text',
+                inputLabel: 'Reason',
+                inputPlaceholder: 'Enter your reason here...',
+                showCancelButton: true,
+                confirmButtonText: 'Submit',
+                cancelButtonText: 'Cancel',
+                preConfirm: (reason) => {
+                    if (!reason) {
+                        Swal.showValidationMessage('Reason is required');
+                    }
+                    return reason;
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const reason = result.value;
+                    fetch(`/exec/jobsheet/${jobId}/update_status`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRFToken': getCSRFToken(),
+                            },
+                            body: JSON.stringify({
+                                action: action,
+                                reason: reason
+                            })
+                        })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Failed to update status');
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            Swal.fire('Success', `job status updated to ${action}`, 'success');
+                            // Optionally refresh the data or update the UI
+                            fetchFilteredData();
+                        })
+                        .catch(error => {
+                            Swal.fire('Error', error.message, 'error');
+                        });
+                }
+            });
+        }
+
+        function getCSRFToken() {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.startsWith('csrftoken=')) {
+                    return cookie.substring('csrftoken='.length, cookie.length);
+                }
+            }
+            return '';
+        }
+    </script>
+</body>
+
+</html>

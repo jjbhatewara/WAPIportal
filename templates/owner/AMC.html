@@ -18,12 +18,28 @@
           href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="{% static 'css/adminlte.css' %}">
-    <link rel="stylesheet" href="{% static 'plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}">
-    <link rel="stylesheet" href="{% static 'plugins/datatables-responsive/css/responsive.bootstrap4.min.css' %}">
-    <link rel="stylesheet" href="{% static 'plugins/datatables-buttons/css/buttons.bootstrap4.min.css' %}">
-    
+    <link rel="stylesheet"
+          href="{% static 'plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}">
+    <link rel="stylesheet"
+          href="{% static 'plugins/datatables-responsive/css/responsive.bootstrap4.min.css' %}">
+    <link rel="stylesheet"
+          href="{% static 'plugins/datatables-buttons/css/buttons.bootstrap4.min.css' %}">
+    <link rel="stylesheet"
+          href="{% static 'plugins/select2/css/select2.min.css' %}">
+    <link rel="stylesheet"
+          href="{% static 'plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css' %}">
     <!-- SweetAlert2 CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <style>
+      .select2-container {
+          width: 100% !important; /* Ensure the container takes full width */
+      }
+      .select2-selection {
+          min-width: 200px; /* Set a minimum width for the dropdown */
+          max-width: 100%; /* Prevent it from exceeding the container width */
+      }
+    </style>
   </head>
   <!--
 `body` tag options:
@@ -181,24 +197,6 @@
                   </p>
                 </a>
               </li>
-              <li class="nav-item">
-                <a href="/owner/todo" class="nav-link">
-                  <i class="nav-icon fas fa-list-ol"></i>
-                  <p>
-                    To Do List
-                    {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
-                  </p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/owner/settings" class="nav-link">
-                  <i class="nav-icon fas fa-cog"></i>
-                  <p>
-                    Settings
-                    {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
-                  </p>
-                </a>
-              </li>
             </ul>
           </nav>
           <!-- /.sidebar-menu -->
@@ -239,12 +237,16 @@
                 <div class="card">
                   <div class="card-header">
                     <h3 class="card-title">All calls</h3>
-                    <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#addAMCModal">
-                      ADD AMC
-                    </button>
-
+                    <button type="button"
+                            class="btn btn-primary float-right"
+                            data-toggle="modal"
+                            data-target="#addAMCModal">ADD AMC</button>
                     <!-- Modal -->
-                    <div class="modal fade" id="addAMCModal" tabindex="-1" role="dialog" aria-labelledby="addAMCModalLabel" aria-hidden="true">
+                    <div class="modal fade"
+                         id="addAMCModal"
+                         role="dialog"
+                         aria-labelledby="addAMCModalLabel"
+                         aria-hidden="true">
                       <div class="modal-dialog modal-xl" role="document">
                         <div class="modal-content">
                           <div class="modal-header">
@@ -258,37 +260,61 @@
                               <div class="form-row">
                                 <div class="form-group col-md-4">
                                   <label for="customerName">Customer Name</label>
-                                  <select class="form-control" id="customerName" name="customerName" required>
-                                  <option value="" disabled selected>Select Customer</option>
-                                  {% for customer in customers %}
-                                    <option value="{{ customer.id }}">{{ customer.company_customer_name }}</option>
-                                  {% endfor %}
+                                  <select class="form-control select2bs4"
+                                          id="customerName"
+                                          name="customerName"
+                                          required>
+                                    <option value="" disabled selected>Select Customer</option>
+                                    {% for customer in customers %}
+                                      <option value="{{ customer.id }}">{{ customer.company_customer_name }}</option>
+                                    {% endfor %}
                                   </select>
                                 </div>
                                 <div class="form-group col-md-4">
                                   <label for="amcName">AMC Name</label>
-                                  <input type="text" class="form-control" id="amcName" name="amcName" placeholder="Enter AMC Name" required>
+                                  <input type="text"
+                                         class="form-control"
+                                         id="amcName"
+                                         name="amcName"
+                                         placeholder="Enter AMC Name"
+                                         required>
                                 </div>
                                 <div class="form-group col-md-4">
                                   <label for="contactNumber">Contact Number</label>
-                                  <input type="text" class="form-control" id="contactNumber" name="contactNumber" placeholder="Enter Contact Number" readonly>
+                                  <input type="text"
+                                         class="form-control"
+                                         id="contactNumber"
+                                         name="contactNumber"
+                                         placeholder="Enter Contact Number"
+                                         readonly>
                                 </div>
                               </div>
                               <div class="form-row">
                                 <div class="form-group col-md-4">
                                   <label for="amcDocNo">AMC Doc No</label>
-                                  <input type="text" class="form-control" id="amcDocNo" name="amcDocNo" placeholder="Enter AMC Doc No" required>
+                                  <input type="text"
+                                         class="form-control"
+                                         id="amcDocNo"
+                                         name="amcDocNo"
+                                         placeholder="Enter AMC Doc No"
+                                         required>
                                 </div>
                                 <div class="form-group col-md-4">
                                   <label for="amcCategory">AMC Category</label>
-                                  <select class="form-control" id="amcCategory" name="amcCategory" required>
+                                  <select class="form-control select2bs4"
+                                          id="amcCategory"
+                                          name="amcCategory"
+                                          required>
                                     <option value="Service AMC">Service AMC</option>
                                     <option value="Labor AMC">Labor AMC</option>
                                   </select>
                                 </div>
                                 <div class="form-group col-md-4">
                                   <label for="renewStatus">Renew Status</label>
-                                  <select class="form-control" id="renewStatus" name="renewStatus" required>
+                                  <select class="form-control select2bs4"
+                                          id="renewStatus"
+                                          name="renewStatus"
+                                          required>
                                     <option value="Active">Active</option>
                                     <option value="Inactive">Inactive</option>
                                   </select>
@@ -297,7 +323,11 @@
                               <div class="form-row">
                                 <div class="form-group col-md-4">
                                   <label for="startingDate">Starting Date</label>
-                                  <input type="date" class="form-control" id="startingDate" name="startingDate" required>
+                                  <input type="date"
+                                         class="form-control"
+                                         id="startingDate"
+                                         name="startingDate"
+                                         required>
                                 </div>
                                 <div class="form-group col-md-4">
                                   <label for="endDate">End Date</label>
@@ -305,69 +335,126 @@
                                 </div>
                                 <div class="form-group col-md-4">
                                   <label for="numberOfServices">Number of Services</label>
-                                  <input type="number" class="form-control" id="numberOfServices" name="numberOfServices" placeholder="Enter Number of Services" max="52" required>
+                                  <input type="number"
+                                         class="form-control"
+                                         id="numberOfServices"
+                                         name="numberOfServices"
+                                         placeholder="Enter Number of Services"
+                                         max="52"
+                                         required>
                                 </div>
                               </div>
                               <div class="form-row">
                                 <div class="form-group col-md-6">
                                   <label for="termsAndConditions">Terms and Conditions</label>
-                                  <input type="text" class="form-control" id="termsAndConditions" name="termsAndConditions" value="Default">
+                                  <input type="text"
+                                         class="form-control"
+                                         id="termsAndConditions"
+                                         name="termsAndConditions"
+                                         value="Default">
                                 </div>
                                 <div class="form-group col-md-6">
                                   <label for="gstNumber">GST Number</label>
-                                  <input type="text" class="form-control" id="gstNumber" name="gstNumber" placeholder="Enter GST Number">
+                                  <input type="text"
+                                         class="form-control"
+                                         id="gstNumber"
+                                         name="gstNumber"
+                                         placeholder="Enter GST Number">
                                 </div>
                               </div>
                               <div class="form-row">
                                 <div class="form-group col-md-4">
                                   <label for="address">Address</label>
-                                  <input type="text" class="form-control" id="address" name="address" placeholder="Enter Address">
+                                  <input type="text"
+                                         class="form-control"
+                                         id="address"
+                                         name="address"
+                                         placeholder="Enter Address">
                                 </div>
                                 <div class="form-group col-md-2">
                                   <label for="area">Area</label>
-                                  <input type="text" class="form-control" id="area" name="area" placeholder="Enter Area">
+                                  <input type="text"
+                                         class="form-control"
+                                         id="area"
+                                         name="area"
+                                         placeholder="Enter Area">
                                 </div>
                                 <div class="form-group col-md-2">
                                   <label for="city">City</label>
-                                  <input type="text" class="form-control" id="city" name="city" placeholder="Enter City">
+                                  <input type="text"
+                                         class="form-control"
+                                         id="city"
+                                         name="city"
+                                         placeholder="Enter City">
                                 </div>
                                 <div class="form-group col-md-2">
                                   <label for="state">State</label>
-                                  <input type="text" class="form-control" id="state" name="state" placeholder="Enter State">
+                                  <input type="text"
+                                         class="form-control"
+                                         id="state"
+                                         name="state"
+                                         placeholder="Enter State">
                                 </div>
                                 <div class="form-group col-md-2">
                                   <label for="zip">Zip</label>
-                                  <input type="text" class="form-control" id="zip" name="zip" placeholder="Enter Zip">
+                                  <input type="text"
+                                         class="form-control"
+                                         id="zip"
+                                         name="zip"
+                                         placeholder="Enter Zip">
                                 </div>
                                 <div class="form-group col-md-2">
                                   <label for="country">Country</label>
-                                  <input type="text" class="form-control" id="country" name="country" placeholder="Enter Country">
+                                  <input type="text"
+                                         class="form-control"
+                                         id="country"
+                                         name="country"
+                                         placeholder="Enter Country">
                                 </div>
                               </div>
                               <div class="form-row">
                                 <div class="form-group col-md-10">
                                   <label for="googleMapUrl">Google Map URL</label>
-                                  <input type="url" class="form-control" id="googleMapUrl" name="googleMapUrl" placeholder="Enter Google Map URL">
+                                  <input type="url"
+                                         class="form-control"
+                                         id="googleMapUrl"
+                                         name="googleMapUrl"
+                                         placeholder="Enter Google Map URL">
                                 </div>
                                 <div class="form-group col-md-2 align-self-end">
-                                  <button type="button" class="btn btn-info btn-block" onclick="window.open(document.getElementById('googleMapUrl').value, '_blank')">View</button>
+                                  <button type="button"
+                                          class="btn btn-info btn-block"
+                                          onclick="window.open(document.getElementById('googleMapUrl').value, '_blank')">
+                                    View
+                                  </button>
                                 </div>
                               </div>
                               <div class="form-row">
                                 <div class="form-group col-md-6">
                                   <label for="amcNotes">AMC Notes</label>
-                                  <textarea class="form-control" id="amcNotes" name="amcNotes" rows="3" placeholder="Enter AMC Notes"></textarea>
+                                  <textarea class="form-control"
+                                            id="amcNotes"
+                                            name="amcNotes"
+                                            rows="3"
+                                            placeholder="Enter AMC Notes"></textarea>
                                 </div>
                                 <div class="form-group col-md-6">
                                   <label for="servicesNotes">Services Notes</label>
-                                  <textarea class="form-control" id="servicesNotes" name="servicesNotes" rows="3" placeholder="Enter Services Notes"></textarea>
+                                  <textarea class="form-control"
+                                            id="servicesNotes"
+                                            name="servicesNotes"
+                                            rows="3"
+                                            placeholder="Enter Services Notes"></textarea>
                                 </div>
                               </div>
                             </form>
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary" id="createAMCButton" form="addAMCForm">Create</button>
+                            <button type="submit"
+                                    class="btn btn-primary"
+                                    id="createAMCButton"
+                                    form="addAMCForm">Create</button>
                           </div>
                         </div>
                       </div>
@@ -377,45 +464,47 @@
                   <!-- /.card-header -->
                   <div class="card-body">
                     <table id="amcTable" class="table table-bordered table-striped">
-                        <thead>
-                            <tr>
-                                <th>AMC Details</th>
-                                <th>Current Call</th>
-                                <th>Status</th>
-                                <th>GST</th>
-                                <th>Contact</th>
-                                <th>ACTIONS</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for amc in amcs %}
-                            <tr>
-                                <td>
-                                  <span style="font-style: italic; color: #28a745;">Customer: {{ amc.customer__company_customer_name }}</span>
-                                  <br>
-                                  <span style="font-weight: bold; color: #007bff;">{{ amc.amc_name }}</span>
-                                  <br>                                  
-                                  <span style="color: #6c757d;">Doc No: {{ amc.amc_doc_no }}</span>
-                                </td>
-                                <td>0/{{ amc.number_of_services }}</td>
-                                <td>
-                                    {% if amc.renew_status == "Active" %}
-                                    <span class="badge badge-success">ACTIVE</span>
-                                    {% else %}
-                                    <span class="badge badge-danger">INACTIVE</span>
-                                    {% endif %}
-                                </td>
-                                <td>{{ amc.gst_number|default:"N/A" }}</td>
-                                <td>{{ amc.contact_number }}</td>
-                                <td>
-                                    <i class="fas fa-edit btn btn-primary btn-sm btn-edit" data-id="{{ amc.id }}"></i>
-                                    <a href="/owner/amc/delete/{{ amc.id }}/" class="btn btn-danger btn-sm btn-delete">
-                                        <i class="fas fa-trash"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
+                      <thead>
+                        <tr>
+                          <th>AMC Details</th>
+                          <th>Current Call</th>
+                          <th>Status</th>
+                          <th>GST</th>
+                          <th>Contact</th>
+                          <th>ACTIONS</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for amc in amcs %}
+                          <tr>
+                            <td>
+                              <span style="font-style: italic; color: #28a745;">Customer: {{ amc.customer__company_customer_name }}</span>
+                              <br>
+                              <span style="font-weight: bold; color: #007bff;">{{ amc.amc_name }}</span>
+                              <br>
+                              <span style="color: #6c757d;">Doc No: {{ amc.amc_doc_no }}</span>
+                            </td>
+                            <td>0/{{ amc.number_of_services }}</td>
+                            <td>
+                              {% if amc.renew_status == "Active" %}
+                                <span class="badge badge-success">ACTIVE</span>
+                              {% else %}
+                                <span class="badge badge-danger">INACTIVE</span>
+                              {% endif %}
+                            </td>
+                            <td>{{ amc.gst_number|default:"N/A" }}</td>
+                            <td>{{ amc.contact_number }}</td>
+                            <td>
+                              <i class="fas fa-edit btn btn-primary btn-sm btn-edit"
+                                 data-id="{{ amc.id }}"></i>
+                              <a href="/owner/amc/delete/{{ amc.id }}/"
+                                 class="btn btn-danger btn-sm btn-delete">
+                                <i class="fas fa-trash"></i>
+                              </a>
+                            </td>
+                          </tr>
+                        {% endfor %}
+                      </tbody>
                     </table>
                   </div>
                   <!-- /.card-body -->
@@ -430,79 +519,126 @@
       </div>
       <!-- /.content-wrapper -->
       <!-- Edit AMC Modal -->
-      <div class="modal fade" id="editAMCModal" tabindex="-1" role="dialog" aria-labelledby="editAMCModalLabel" aria-hidden="true">
+      <div class="modal fade"
+           id="editAMCModal"
+           tabindex="-1"
+           role="dialog"
+           aria-labelledby="editAMCModalLabel"
+           aria-hidden="true">
         <div class="modal-dialog modal-xl" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editAMCModalLabel">Edit AMC</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="editAMCForm">
-                        <input type="hidden" id="editAMCId" name="amc_id">
-                        <div class="form-row">
-                            <div class="form-group col-md-4">
-                                <label for="editAMCName">AMC Name</label>
-                                <input type="text" class="form-control" id="editAMCName" name="amc_name" required>
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label for="editContactNumber">Contact Number</label>
-                                <input type="text" class="form-control" id="editContactNumber" name="contact_number" readonly>
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label for="editAMCDocNo">AMC Doc No</label>
-                                <input type="text" class="form-control" id="editAMCDocNo" name="amc_doc_no" required>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-4">
-                                <label for="editAMCCategory">AMC Category</label>
-                                <select class="form-control" id="editAMCCategory" name="amc_category" required>
-                                    <option value="Service AMC">Service AMC</option>
-                                    <option value="Labor AMC">Labor AMC</option>
-                                </select>
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label for="editRenewStatus">Renew Status</label>
-                                <select class="form-control" id="editRenewStatus" name="renew_status" required>
-                                    <option value="Active">Active</option>
-                                    <option value="Inactive">Inactive</option>
-                                </select>
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label for="editNumberOfServices">Number of Services</label>
-                                <input type="number" class="form-control" id="editNumberOfServices" name="number_of_services" max="52" required>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="editStartingDate">Starting Date</label>
-                                <input type="date" class="form-control" id="editStartingDate" name="starting_date" required>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="editEndDate">End Date</label>
-                                <input type="date" class="form-control" id="editEndDate" name="end_date" required>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="editAMCNotes">AMC Notes</label>
-                                <textarea class="form-control" id="editAMCNotes" name="amc_notes" rows="3" placeholder="Enter AMC Notes"></textarea>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="editServicesNotes">Services Notes</label>
-                                <textarea class="form-control" id="editServicesNotes" name="services_notes" rows="3" placeholder="Enter Services Notes"></textarea>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" id="saveAMCButton" form="editAMCForm">Save Changes</button>
-                </div>
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="editAMCModalLabel">Edit AMC</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
             </div>
+            <div class="modal-body">
+              <form id="editAMCForm">
+                <input type="hidden" id="editAMCId" name="amc_id">
+                <div class="form-row">
+                  <div class="form-group col-md-4">
+                    <label for="editAMCName">AMC Name</label>
+                    <input type="text"
+                           class="form-control"
+                           id="editAMCName"
+                           name="amc_name"
+                           required>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="editContactNumber">Contact Number</label>
+                    <input type="text"
+                           class="form-control"
+                           id="editContactNumber"
+                           name="contact_number"
+                           readonly>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="editAMCDocNo">AMC Doc No</label>
+                    <input type="text"
+                           class="form-control"
+                           id="editAMCDocNo"
+                           name="amc_doc_no"
+                           required>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-4">
+                    <label for="editAMCCategory">AMC Category</label>
+                    <select class="form-control select2bs4"
+                            id="editAMCCategory"
+                            name="amc_category"
+                            required>
+                      <option value="Service AMC">Service AMC</option>
+                      <option value="Labor AMC">Labor AMC</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="editRenewStatus">Renew Status</label>
+                    <select class="form-control select2bs4"
+                            id="editRenewStatus"
+                            name="renew_status"
+                            required>
+                      <option value="Active">Active</option>
+                      <option value="Inactive">Inactive</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="editNumberOfServices">Number of Services</label>
+                    <input type="number"
+                           class="form-control"
+                           id="editNumberOfServices"
+                           name="number_of_services"
+                           max="52"
+                           required>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="editStartingDate">Starting Date</label>
+                    <input type="date"
+                           class="form-control"
+                           id="editStartingDate"
+                           name="starting_date"
+                           required>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="editEndDate">End Date</label>
+                    <input type="date"
+                           class="form-control"
+                           id="editEndDate"
+                           name="end_date"
+                           required>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="editAMCNotes">AMC Notes</label>
+                    <textarea class="form-control"
+                              id="editAMCNotes"
+                              name="amc_notes"
+                              rows="3"
+                              placeholder="Enter AMC Notes"></textarea>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="editServicesNotes">Services Notes</label>
+                    <textarea class="form-control"
+                              id="editServicesNotes"
+                              name="services_notes"
+                              rows="3"
+                              placeholder="Enter Services Notes"></textarea>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit"
+                      class="btn btn-primary"
+                      id="saveAMCButton"
+                      form="editAMCForm">Save Changes</button>
+            </div>
+          </div>
         </div>
       </div>
       <!-- /.modal -->
@@ -550,11 +686,18 @@
     <!-- OPTIONAL SCRIPTS -->
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="{% static 'js/pages/dashboard3.js' %}"></script>
+    <script src="{% static 'plugins/select2/js/select2.full.min.js' %}"></script>
     <!-- SweetAlert2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-
     $(document).ready(function () {
+
+      $('select:not(.normal)').each(function () {
+        $(this).select2({
+          theme: 'bootstrap4',
+            dropdownParent: $(this).parent()
+        });
+    });
         // Initialize DataTable
         $("#amcTable").DataTable({
             responsive: true,
@@ -565,7 +708,6 @@
         }).buttons().container().appendTo('#amcTable_wrapper .col-md-6:eq(0)');
     });
     </script>
-
     <script>
     $(document).ready(function () {
         // Handle customer selection
@@ -612,7 +754,6 @@
         });
     });
     </script>
-
     <script>
     $(document).ready(function () {
         // Handle form submission
@@ -676,7 +817,6 @@
         });
     });
     </script>
-
     <script>
     $(document).ready(function () {
         // Handle delete button click
@@ -723,7 +863,6 @@
         });
     });
     </script>
-
     <script>
     $(document).ready(function () {
         // Handle edit button click

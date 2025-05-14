@@ -1,7 +1,11 @@
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from .models import Customer, CustomerType, Executive, Department, AMC, Call
+from .models import Customer, CustomerType, Executive, Department, AMC, Call, JobSheet
+# from django.db.models import F, Value, CharField
+# from django.db.models.functions import Concat
+from itertools import groupby
+from operator import itemgetter
 
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
@@ -9,14 +13,80 @@ from .models import Executive
 import os
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
 
+@login_required(login_url='/')
 def dashboard(request):
-    return render(request, "owner/dashboard.html")
+    # Total calls count by status
+    completed_calls_count = Call.objects.filter(call_status="Completed").count()
+    rejected_calls_count = Call.objects.filter(call_status="Rejected").count()
+    pending_calls_count = Call.objects.filter(call_status="Pending").count()
+
+    # Total jobsheet count by status
+    completed_jobsheet_count = JobSheet.objects.filter(job_status="Completed").count()
+    closed_jobsheet_count = JobSheet.objects.filter(job_status="Closed").count()
+    pending_jobsheet_count = JobSheet.objects.filter(job_status="Pending").count()
+
+    # Total counts
+    total_calls_count = completed_calls_count + rejected_calls_count + pending_calls_count
+    total_jobsheet_count = completed_jobsheet_count + closed_jobsheet_count + pending_jobsheet_count
+
+    # Calculate call percentages
+    completed_calls_percentage = (
+        (completed_calls_count / total_calls_count) * 100 if total_calls_count > 0 else 0
+    )
+    rejected_calls_percentage = (
+        (rejected_calls_count / total_calls_count) * 100 if total_calls_count > 0 else 0
+    )
+    pending_calls_percentage = (
+        (pending_calls_count / total_calls_count) * 100 if total_calls_count > 0 else 0
+    )
+
+    # Calculate jobsheet percentages
+    completed_jobsheet_percentage = (
+        (completed_jobsheet_count / total_jobsheet_count) * 100 if total_jobsheet_count > 0 else 0
+    )
+    closed_jobsheet_percentage = (
+        (closed_jobsheet_count / total_jobsheet_count) * 100 if total_jobsheet_count > 0 else 0
+    )
+    pending_jobsheet_percentage = (
+        (pending_jobsheet_count / total_jobsheet_count) * 100 if total_jobsheet_count > 0 else 0
+    )
+
+    # Calculate percentage of AMC calls with respect to total calls
+    amc_calls_count = Call.objects.filter(amc__isnull=False).count()
+    amc_calls_percentage = (
+        (amc_calls_count / total_calls_count) * 100 if total_calls_count > 0 else 0
+    )
+
+    return render(
+        request,
+        "owner/dashboard.html",
+        {
+            "completed_calls_count": completed_calls_count,
+            "rejected_calls_count": rejected_calls_count,
+            "pending_calls_count": pending_calls_count,
+            "jobsheet_count": total_jobsheet_count,
+            "completed_jobsheet_count": completed_jobsheet_count,
+            "closed_jobsheet_count": closed_jobsheet_count,
+            "pending_jobsheet_count": pending_jobsheet_count,
+            "calls_with_amc_count": amc_calls_count,
+            "total_calls_count": total_calls_count,
+            "completed_calls_percentage": completed_calls_percentage,
+            "rejected_calls_percentage": rejected_calls_percentage,
+            "pending_calls_percentage": pending_calls_percentage,
+            "completed_jobsheet_percentage": completed_jobsheet_percentage,
+            "closed_jobsheet_percentage": closed_jobsheet_percentage,
+            "pending_jobsheet_percentage": pending_jobsheet_percentage,
+            "amc_calls_percentage": amc_calls_percentage,
+        },
+    )
 
 
+@login_required(login_url='/')
 def customers(request):
     customer_types = CustomerType.objects.all()  # Fetch all customer types
     customers = Customer.objects.all()  # Fetch all customers
@@ -27,6 +97,7 @@ def customers(request):
     )
 
 
+@login_required(login_url='/')
 def add_customer(request):
     if request.method == "POST":
         try:
@@ -82,7 +153,7 @@ def add_customer(request):
     # Return error for non-POST requests
     return JsonResponse({"status": "error", "message": "Invalid request method."})
 
-
+@login_required(login_url='/')
 def delete_customer(request, customer_id):
     if request.method == "DELETE":
         try:
@@ -100,7 +171,7 @@ def delete_customer(request, customer_id):
             )
     return JsonResponse({"status": "error", "message": "Invalid request method."})
 
-
+@login_required(login_url='/')
 @csrf_exempt
 def get_customer_details(request, customer_id):
     if request.method == "GET":
@@ -141,7 +212,7 @@ def get_customer_details(request, customer_id):
     # Return error for non-GET requests
     return JsonResponse({"status": "error", "message": "Invalid request method."})
 
-
+@login_required(login_url='/')
 @csrf_exempt
 def edit_customer(request, customer_id):
     if request.method == "POST":
@@ -179,7 +250,7 @@ def edit_customer(request, customer_id):
 
     return JsonResponse({"status": "error", "message": "Invalid request method."})
 
-
+@login_required(login_url='/')
 @csrf_exempt
 def add_executive(request):
     if request.method == "POST":
@@ -260,7 +331,7 @@ def add_executive(request):
     # Return error for non-POST requests
     return JsonResponse({"status": "error", "message": "Invalid request method."})
 
-
+@login_required(login_url='/')
 def delete_executive(request, executive_id):
     if request.method == "DELETE":
         try:
@@ -297,7 +368,7 @@ def delete_executive(request, executive_id):
             )
     return JsonResponse({"status": "error", "message": "Invalid request method."})
 
-
+@login_required(login_url='/')
 @csrf_exempt
 def edit_executive(request, executive_id):
     if request.method == "POST":
@@ -360,7 +431,7 @@ def edit_executive(request, executive_id):
 
     return JsonResponse({"status": "error", "message": "Invalid request method."})
 
-
+@login_required(login_url='/')
 def executives(request):
     departments = Department.objects.all()  # Fetch all departments
     executives = Executive.objects.filter(is_superuser=False).values(
@@ -372,7 +443,7 @@ def executives(request):
         {"departments": departments, "executives": executives},
     )
 
-
+@login_required(login_url='/')
 def executive_details(request, executive_id):
     if request.method == "GET":
         try:
@@ -399,15 +470,20 @@ def executive_details(request, executive_id):
 
     return JsonResponse({"status": "error", "message": "Invalid request method."})
 
-
+@login_required(login_url='/')
 def call(request):
+    # Fetch customers with required fields
     customers = Customer.objects.values(
         "id", "company_customer_name"
-    )  #
+    )
+
+    # Fetch executives with required fields
     executives = Executive.objects.filter(is_superuser=False).values(
         "id", "first_name",
-    ) 
-    calls = Call.objects.select_related("customer", "amc").prefetch_related("executives").values(
+    )
+
+    # Fetch calls with required fields
+    calls_raw = Call.objects.select_related("customer", "amc").prefetch_related("executives").values(
         "id",
         "call_document_number",
         "call_type",
@@ -417,15 +493,104 @@ def call(request):
         "amc__amc_name",
         "amc__renew_status",
         "customer__contact_number",
+        "executives__id",
         "executives__first_name",
+        "notes",
+        "call_status"
     )
-    return render(request, "owner/call.html",{"customers": customers, "executives": executives, "calls": calls})
+
+    # Group calls by their ID and aggregate executives' names
+    calls = []
+    for key, group in groupby(calls_raw, key=itemgetter("id")):
+        group = list(group)
+        call = group[0]
+        call["executive_names"] = ", ".join(
+            [item["executives__first_name"] for item in group if item["executives__first_name"]]
+        )
+        calls.append(call)
+
+    # Render the template with the required data
+    return render(
+        request,
+        "owner/call.html",
+        {
+            "customers": customers,
+            "executives": executives,
+            "calls": calls,
+        },
+    )
+
+@login_required(login_url='/')
+def delete_call(request, call_id):
+    if request.method == "DELETE":
+        try:
+            call = Call.objects.get(id=call_id)
+            call.delete()
+            return JsonResponse({"status": "success", "message": "Call deleted successfully!"})
+        except Call.DoesNotExist:
+            return JsonResponse({"status": "error", "message": "Call not found."})
+    return JsonResponse({"status": "error", "message": "Invalid request method."})
+
+@login_required(login_url='/')
+def edit_call(request):
+    if request.method == "POST":
+        try:
+            call_id = request.POST.get("id")
+            call = Call.objects.get(id=call_id)
+
+            # Update fields
+            call.call_type = request.POST.get("call_type")
+            call.priority = request.POST.get("priority")
+            call.attend_date = request.POST.get("attend_date")
+            call.notes = request.POST.get("notes")
+            call.call_status = request.POST.get("call_status")
+
+            # Update executives
+            executive_ids = request.POST.getlist("executives")
+            call.executives.set(Executive.objects.filter(id__in=executive_ids))
+
+            call.save()
+            return JsonResponse({"status": "success", "message": "Call updated successfully!"})
+        except Call.DoesNotExist:
+            return JsonResponse({"status": "error", "message": "Call not found."})
+    return JsonResponse({"status": "error", "message": "Invalid request method."})
 
 
-def jobs(request):
-    return render(request, "owner/jobs.html")
+# def jobs(request):
+#     customers = Customer.objects.values(
+#         "id", "company_customer_name", "contact_number")
 
+#     # Fetch executives who are not superusers with required fields
+#     executives = Executive.objects.filter(is_superuser=False).values("id", "first_name")
 
+#     # Fetch jobsheets with required fields
+#     jobsheets = JobSheet.objects.select_related("customer").prefetch_related("executives").values(
+#         "job_sheet_no",
+#         "customer__company_customer_name",
+#         "contact_number",
+#         "model_name_or_number",
+#         "emi_or_serial_or_part_number",
+#         "physical_condition",
+#         "problem",
+#         "accessories",
+#         "notes",
+#         "estimated_price",
+#         "terms_and_conditions",
+#         "executives__first_name",
+#     )
+
+#     # Render the template with the required data
+#     return render(
+#         request,
+#         "owner/jobsheet.html",
+#         {
+#             "customers": customers,
+#             "executives": executives,
+#             "jobsheets": jobsheets,
+#         },
+#     )
+
+@login_required(login_url='/')
 def amc(request):
     customers = Customer.objects.values(
         "id", "company_customer_name"
@@ -446,7 +611,7 @@ def amc(request):
         {"customers": customers, "amcs": amcs},
     )
 
-
+@login_required(login_url='/')
 @csrf_exempt
 def add_amc(request):
     if request.method == "POST":
@@ -513,7 +678,7 @@ def add_amc(request):
     # Return error for non-POST requests
     return JsonResponse({"status": "error", "message": "Invalid request method."})
 
-
+@login_required(login_url='/')
 @csrf_exempt
 def delete_amc(request, amc_id):
     if request.method == "DELETE":
@@ -532,7 +697,7 @@ def delete_amc(request, amc_id):
             )
     return JsonResponse({"status": "error", "message": "Invalid request method."})
 
-
+@login_required(login_url='/')
 def get_amc_details(request, amc_id):
     if request.method == "GET":
         try:
@@ -554,7 +719,7 @@ def get_amc_details(request, amc_id):
         except Exception as e:
             return JsonResponse({"status": "error", "message": f"Error: {str(e)}"})
 
-
+@login_required(login_url='/')
 @csrf_exempt
 def edit_amc(request, amc_id):
     if request.method == "POST":
@@ -580,7 +745,7 @@ def edit_amc(request, amc_id):
         except Exception as e:
             return JsonResponse({"status": "error", "message": f"Error: {str(e)}"})
 
-
+@login_required(login_url='/')
 @csrf_exempt
 def create_call(request):
     if request.method == "POST":
@@ -631,10 +796,125 @@ def create_call(request):
     # Return error for non-POST requests
     return JsonResponse({"status": "error", "message": "Invalid request method."})
 
-
+@login_required(login_url='/')
 def todo(request):
     return render(request, "owner/todo.html")
 
-
+@login_required(login_url='/')
 def settings(request):
     return render(request, "owner/settings.html")
+
+@login_required(login_url='/')
+def jobsheet_list(request):
+    # Fetch customers with required fields
+    customers = Customer.objects.values(
+        "id", "company_customer_name", "contact_number"
+    )
+
+    # Fetch executives with required fields
+    executives = Executive.objects.filter(is_superuser=False).values("id", "first_name")
+
+    # Fetch jobsheets with required fields
+    jobsheets_raw = JobSheet.objects.select_related("customer").prefetch_related("executives").values(
+        "job_sheet_no",
+        "customer__company_customer_name",
+        "contact_number",
+        "model_name_or_number",
+        "emi_or_serial_or_part_number",
+        "physical_condition",
+        "problem",
+        "accessories",
+        "notes",
+        "estimated_price",
+        "terms_and_conditions",
+        "executives__id",
+        "executives__first_name",
+    )
+
+    # Group jobsheets by their ID and aggregate executives' names
+    jobsheets = []
+    for key, group in groupby(jobsheets_raw, key=itemgetter("job_sheet_no")):
+        group = list(group)
+        jobsheet = group[0]
+        jobsheet["executive_names"] = ", ".join(
+            [item["executives__first_name"] for item in group if item["executives__first_name"]]
+        )
+        jobsheets.append(jobsheet)
+
+    # Render the template with the required data
+    return render(
+        request,
+        "owner/jobsheet.html",
+        {
+            "customers": customers,
+            "executives": executives,
+            "jobsheets": jobsheets,
+        },
+    )
+
+@login_required(login_url='/')
+def create_jobsheet(request):
+    if request.method == "POST":
+        try:
+            customer_id = request.POST.get("customer")
+            customer = get_object_or_404(Customer, id=customer_id)
+            contact_number = request.POST.get("contact_number")
+            model_name_or_number = request.POST.get("model_name_or_number")
+            emi_or_serial_or_part_number = request.POST.get("emi_or_serial_or_part_number")
+            physical_condition = request.POST.get("physical_condition")
+            problem = request.POST.get("problem")
+            accessories = request.POST.get("accessories")
+            notes = request.POST.get("notes")
+            estimated_price = request.POST.get("estimated_price")
+            terms_and_conditions = request.POST.get("terms_and_conditions")
+            executive_ids = request.POST.getlist("executives")
+
+            jobsheet = JobSheet.objects.create(
+                customer=customer,
+                contact_number=contact_number,
+                model_name_or_number=model_name_or_number,
+                emi_or_serial_or_part_number=emi_or_serial_or_part_number,
+                physical_condition=physical_condition,
+                problem=problem,
+                accessories=accessories,
+                notes=notes,
+                estimated_price=estimated_price,
+                terms_and_conditions=terms_and_conditions,
+            )
+            jobsheet.executives.set(Executive.objects.filter(id__in=executive_ids))
+            return JsonResponse({"status": "success", "message": "Job Sheet created successfully!"})
+        except Exception as e:
+            return JsonResponse({"status": "error", "message": str(e)})
+    return JsonResponse({"status": "error", "message": "Invalid request method."})
+
+@login_required(login_url='/')
+@csrf_exempt
+def delete_jobsheet(request, job_sheet_no):
+    if request.method == "DELETE":
+        try:
+            jobsheet = JobSheet.objects.get(job_sheet_no=job_sheet_no)
+            jobsheet.delete()
+            return JsonResponse({"status": "success", "message": "JobSheet deleted successfully!"})
+        except JobSheet.DoesNotExist:
+            return JsonResponse({"status": "error", "message": "JobSheet not found."})
+    return JsonResponse({"status": "error", "message": "Invalid request method."})
+
+def edit_jobsheet(request, job_sheet_no):
+    if request.method == "POST":
+        try:
+            jobsheet = JobSheet.objects.get(job_sheet_no=job_sheet_no)
+
+            # Update fields
+            jobsheet.model_name_or_number = request.POST.get("model_name_or_number")
+            jobsheet.emi_or_serial_or_part_number = request.POST.get("emi_or_serial_or_part_number")
+            jobsheet.physical_condition = request.POST.get("physical_condition")
+            jobsheet.problem = request.POST.get("problem")
+            jobsheet.accessories = request.POST.get("accessories")
+            jobsheet.notes = request.POST.get("notes")
+            jobsheet.estimated_price = request.POST.get("estimated_price")
+
+            jobsheet.save()
+            return JsonResponse({"status": "success", "message": "JobSheet updated successfully!"})
+        except JobSheet.DoesNotExist:
+            return JsonResponse({"status": "error", "message": "JobSheet not found."})
+    return JsonResponse({"status": "error", "message": "Invalid request method."})

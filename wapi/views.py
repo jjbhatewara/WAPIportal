@@ -8,14 +8,17 @@ def login(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
-        print(user)
         if user is not None:
             auth_login(request, user)
-            return redirect('dashboard')  # Replace 'home' with your desired redirect URL name
+            # Redirect based on user role
+            if user.is_superuser:
+                return redirect('/owner/dashboard')  # Redirect superusers to the owner dashboard
+            else:
+                return redirect('/exec/dashboard')  # Redirect executives to the executive dashboard
         else:
             messages.error(request, 'Invalid username or password')
-    return render(request, 'login.html')  # Replace 'login.html' with your login template
+    return render(request, 'login.html')  # Render the login page
 
 def logout(request):
     auth_logout(request)
-    return render(request, 'login.html')  # Replace 'login' with your desired redirect URL name
+    return render(request, 'login.html')  # Render the login page after logout

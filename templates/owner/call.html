@@ -1,30 +1,47 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Evergreen Computers</title>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Evergreen Computers</title>
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet"
+          href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css'%}" >          
+    {% comment %} <link rel="stylesheet" href="{% static 'plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css'%}"> {% endcomment %}
+          <!-- IonIcons -->
+    <link rel="stylesheet"
+          href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css"
+          >
 
-  <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
-
-  <!-- IonIcons -->
-  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-
-  <!-- DataTables -->
-  <link rel="stylesheet" href="{% static 'plugins/datatables-bs4/css/dataTables.bootstrap4.min.css'%}">
-  <link rel="stylesheet" href="{% static 'plugins/datatables-responsive/css/responsive.bootstrap4.min.css'%}">
-  <link rel="stylesheet" href="{% static 'plugins/datatables-buttons/css/buttons.bootstrap4.min.css'%}">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="{% static 'css/adminlte.css' %}">
-  
-</head>
-<!--
+    <link rel="stylesheet" href="{% static 'plugins/select2/css/select2.min.css' %}">
+    {% comment %} <link rel="stylesheet" href="{% static 'plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css' %}">           {% endcomment %}
+    <!-- DataTables -->
+    <link rel="stylesheet"
+          href="{% static 'plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}">
+    <link rel="stylesheet"
+          href="{% static 'plugins/datatables-responsive/css/responsive.bootstrap4.min.css' %}">
+    <link rel="stylesheet"
+          href="{% static 'plugins/datatables-buttons/css/buttons.bootstrap4.min.css' %}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{% static 'css/adminlte.css' %}">
+    <style>
+      .select2-container {
+          width: 100% !important; /* Ensure the container takes full width */
+      }
+      .select2-selection {
+          min-width: 200px; /* Set a minimum width for the dropdown */
+          max-width: 100%; /* Prevent it from exceeding the container width */
+      }
+    </style>
+  </head>
+  <!--
 `body` tag options:
 
   Apply one or more of the following classes to to the body tag
@@ -33,81 +50,85 @@
   * sidebar-collapse
   * sidebar-mini
 -->
-<body class="hold-transition sidebar-mini">
-<div class="wrapper">
-  <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-    <!-- Left navbar links -->
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="index3.html" class="nav-link">Home</a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">Contact</a>
-      </li>
-    </ul>
-
-    <!-- Right navbar links -->
-    <ul class="navbar-nav ml-auto">
-      <li class="nav-item">
-        <a class="nav-link" data-widget="navbar-search" href="#" role="button">
-          <i class="fas fa-search"></i>
-        </a>
-        <div class="navbar-search-block">
-          <form class="form-inline">
-            <div class="input-group input-group-sm">
-              <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-              <div class="input-group-append">
-                <button class="btn btn-navbar" type="submit">
-                  <i class="fas fa-search"></i>
-                </button>
-                <button class="btn btn-navbar" type="button" data-widget="navbar-search">
-                  <i class="fas fa-times"></i>
-                </button>
-              </div>
+  <body class="hold-transition sidebar-mini">
+    <div class="wrapper">
+      <!-- Navbar -->
+      <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+        <!-- Left navbar links -->
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+          </li>
+          <li class="nav-item d-none d-sm-inline-block">
+            <a href="index3.html" class="nav-link">Home</a>
+          </li>
+          <li class="nav-item d-none d-sm-inline-block">
+            <a href="#" class="nav-link">Contact</a>
+          </li>
+        </ul>
+        <!-- Right navbar links -->
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" data-widget="navbar-search" href="#" role="button">
+              <i class="fas fa-search"></i>
+            </a>
+            <div class="navbar-search-block">
+              <form class="form-inline">
+                <div class="input-group input-group-sm">
+                  <input class="form-control form-control-navbar"
+                         type="search"
+                         placeholder="Search"
+                         aria-label="Search">
+                  <div class="input-group-append">
+                    <button class="btn btn-navbar" type="submit">
+                      <i class="fas fa-search"></i>
+                    </button>
+                    <button class="btn btn-navbar" type="button" data-widget="navbar-search">
+                      <i class="fas fa-times"></i>
+                    </button>
+                  </div>
+                </div>
+              </form>
             </div>
-          </form>
-        </div>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-          <i class="fas fa-expand-arrows-alt"></i>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+              <i class="fas fa-expand-arrows-alt"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout' %}" role="button">
+              <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <!-- /.navbar -->
+      <!-- Main Sidebar Container -->
+      <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <!-- Brand Logo -->
+        <a href="/owner/home" class="brand-link">
+          <img src="{% static 'img/eglogo.png' %}"
+               alt="AdminLTE Logo"
+               class="brand-image img-circle elevation-3"
+               style="opacity: .8">
+          <span class="brand-text font-weight-light">Evergreen</span>
         </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'logout' %}" role="button">
-          <i class="fas fa-sign-out-alt"></i> Logout
-        </a>
-      </li>
-    </ul>
-  </nav>
-  <!-- /.navbar -->
-
-  <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <!-- Brand Logo -->
-    <a href="/owner/home" class="brand-link">
-      <img src="{% static 'img/eglogo.png' %}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">Evergreen</span>
-    </a>
-
-    <!-- Sidebar -->
-    <div class="sidebar">
-      <!-- Sidebar user panel (optional) -->
-      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-          <img src="{% static 'img/jjb.png' %}" class="img-circle elevation-2" alt="User Image">
-        </div>
-        <div class="info">
-          <a href="#" class="d-block">Jinesh Bhatewara</a>
-        </div>
-      </div>
-
-      <!-- SidebarSearch Form -->
-      {% comment %} <div class="form-inline">
+        <!-- Sidebar -->
+        <div class="sidebar">
+          <!-- Sidebar user panel (optional) -->
+          <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="image">
+              <img src="{% static 'img/jjb.png' %}"
+                   class="img-circle elevation-2"
+                   alt="User Image">
+            </div>
+            <div class="info">
+              <a href="#" class="d-block">Jinesh Bhatewara</a>
+            </div>
+          </div>
+          <!-- SidebarSearch Form -->
+          {% comment %} <div class="form-inline">
         <div class="input-group" data-widget="sidebar-search">
           <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
           <div class="input-group-append">
@@ -116,556 +137,516 @@
             </button>
           </div>
         </div>
-      </div> {% endcomment %}
-
-      <!-- Sidebar Menu -->
-      <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <li class="nav-item">
-            <a href="/owner/dashboard" class="nav-link ">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>
-                Dashboard
-                {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="/owner/customers" class="nav-link ">
-              <i class="nav-icon fas fa-user "></i>
-              <p>
-                Customers
-                {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="/owner/executives" class="nav-link ">
-              <i class="nav-icon fas fa-walking "></i>
-              <p>
-                Executives
-                {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="/owner/call" class="nav-link active">
-              <i class="nav-icon fas fa-phone-alt"></i>
-              <p>
-                Call
-                {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="/owner/jobs" class="nav-link">
-              <i class="nav-icon fas fa-copy"></i>
-              <p>
-                Jobsheets
-                {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="/owner/amc" class="nav-link">
-              <i class="nav-icon fas fa-tools"></i>
-              <p>
-                AMC
-                {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="/owner/todo" class="nav-link">
-              <i class="nav-icon fas fa-list-ol"></i>
-              <p>
-                To Do List
-                {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="/owner/settings" class="nav-link">
-              <i class="nav-icon fas fa-cog"></i>
-              <p>
-                Settings
-                {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
-              </p>
-            </a>
-          </li>
- 
-        </ul>
-      </nav>
-      <!-- /.sidebar-menu -->
-    </div>
-    <!-- /.sidebar -->
-  </aside>
-
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0">Calls </h1>
-          </div><!-- /.col -->
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Administrator</a></li>
-              <li class="breadcrumb-item active">Customers </li>
-            </ol>
-          </div><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
-
-    <!-- Main content -->
-    <div class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-12">
-            <!-- /.card -->
-
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">All calls</h3>
-                <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#createCallModal">
-                  Create Call
-                </button>
-
-                <!-- Modal -->
-
+          </div> {% endcomment %}
+          <!-- Sidebar Menu -->
+          <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column"
+                data-widget="treeview"
+                role="menu"
+                data-accordion="false">
+              <li class="nav-item">
+                <a href="/owner/dashboard" class="nav-link ">
+                  <i class="nav-icon fas fa-tachometer-alt"></i>
+                  <p>
+                    Dashboard
+                    {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/owner/customers" class="nav-link ">
+                  <i class="nav-icon fas fa-user "></i>
+                  <p>
+                    Customers
+                    {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/owner/executives" class="nav-link ">
+                  <i class="nav-icon fas fa-walking "></i>
+                  <p>
+                    Executives
+                    {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/owner/call" class="nav-link active">
+                  <i class="nav-icon fas fa-phone-alt"></i>
+                  <p>
+                    Call
+                    {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/owner/jobs" class="nav-link">
+                  <i class="nav-icon fas fa-copy"></i>
+                  <p>
+                    Jobsheets
+                    {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/owner/amc" class="nav-link">
+                  <i class="nav-icon fas fa-tools"></i>
+                  <p>
+                    AMC
+                    {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
+                  </p>
+                </a>
+              </li>
+            </ul>
+          </nav>
+          <!-- /.sidebar-menu -->
+        </div>
+        <!-- /.sidebar -->
+      </aside>
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+          <div class="container-fluid">
+            <div class="row mb-2">
+              <div class="col-sm-6">
+                <h1 class="m-0">Calls</h1>
               </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-                <div class="row mb-3">
-                  <div class="col-md-3">
-                    <label for="statusFilter">Filter by Status:</label>
-                    <select id="statusFilter" class="form-control">
-                      <option value="">All</option>
-                      <option value="Pending">Pending</option>
-                      <option value="Completed">Completed</option>
-                    </select>
+              <!-- /.col -->
+              <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                  <li class="breadcrumb-item">
+                    <a href="#">Administrator</a>
+                  </li>
+                  <li class="breadcrumb-item active">Customers</li>
+                </ol>
+              </div>
+              <!-- /.col -->
+            </div>
+            <!-- /.row -->
+          </div>
+          <!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+        <!-- Main content -->
+        <div class="content">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-12">
+                <!-- /.card -->
+                <div class="card">
+                  <div class="card-header">
+                    <h3 class="card-title">All calls</h3>
+                    <button type="button"
+                            class="btn btn-success float-right"
+                            data-toggle="modal"
+                            data-target="#createCallModal">Create Call</button>
+                    <!-- Modal -->
                   </div>
-                  <div class="col-md-3">
-                    <label for="callTypeFilter">Filter by Call Type:</label>
-                    <select id="callTypeFilter" class="form-control">
-                      <option value="">All</option>
-                      <option value="Normal">Normal</option>
-                      <option value="AMC">AMC</option>
+                  <!-- /.card-header -->
+                  <div class="card-body">
+                    <div class="row mb-3">
+                      <div class="col-md-3">
+                        <label for="statusFilter">Filter by Status:</label>
+                        <select id="statusFilter" class="form-control">
+                          <option value="">All</option>
+                          <option value="Pending">Pending</option>
+                          <option value="Completed">Completed</option>
+                        </select>
+                      </div>
+                      <div class="col-md-3">
+                        <label for="callTypeFilter">Filter by Call Type:</label>
+                        <select id="callTypeFilter" class="form-control">
+                          <option value="">All</option>
+                          <option value="Normal Call">Normal Call</option>
+                          <option value="AMC Call">AMC Call</option>
+                          <option value="Job Call">Job Call</option>
+                          <option value="Service Call">Service Call</option>
+                        </select>
+                      </div>
+                    </div>
+                    <table id="example1" class="table table-bordered table-striped">
+                      <thead>
+                        <tr>
+                          <th>DETAIL</th>
+                          <th>PROBLEM</th>
+                          <th>CALL TYPE</th>
+                          <th>STATUS</th>
+                          <th>EXECUTIVE(S)</th>
+                          <th>ISSUE DATE</th>
+                          <th>COMPLETE DATE</th>
+                          <th>CUSTOMER CONTACT</th>
+                          <th>ACTIONS</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for call in calls %}
+                          <tr>
+                            <td>
+                              {{ call.customer__company_customer_name }}
+                              <br>
+                              Doc No: {{ call.call_document_number }}
+                              <br>
+                              {{ call.amc__amc_name }}
+                            </td>
+                            <td>
+                              Priority: {{ call.priority }}
+                              <br>
+                              Note: - {{ call.notes }}
+                            </td>
+                            <td>{{ call.call_type }}</td>
+                            <td>
+                              <span class="badge {% if call.call_status == 'Completed' %}badge-success{% elif call.call_status == 'Pending' %}badge-warning{% else %}badge-danger{% endif %}">
+                                {{ call.call_status }}
+                              </span>
+                            </td>
+                            <td>{{ call.executive_names }}</td>
+                            <td>{{ call.attend_date|date:"Y-m-d" }}</td>
+                            <td>{{ call.closed_at|date:"Y-m-d" }}</td>
+                            <td>{{ call.customer__contact_number }}</td>
+                            <td>
+                              <i class="fas fa-edit btn btn-primary btn-sm edit-call"
+                                 data-id="{{ call.id }}"
+                                 data-customer="{{ call.customer__company_customer_name }}"
+                                 data-contact="{{ call.customer__contact_number }}"
+                                 data-call-type="{{ call.call_type }}"
+                                 data-priority="{{ call.priority }}"
+                                 data-attend-date="{{ call.attend_date|date:'Y-m-d\TH:i' }}"
+                                 data-notes="{{ call.notes }}"
+                                 data-status="{{ call.call_status }}"
+                                 data-executives="{{ call.executive_names }}">
+                              </i>
+                              <button class="btn btn-danger btn-sm delete-call" data-id="{{ call.id }}">
+                                <i class="fas fa-trash"></i>
+                              </button>
+                            </td>
+                          </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                  <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+              </div>
+              <!-- /.col -->
+            </div>
+          </div>
+          <!-- /.container-fluid -->
+        </div>
+        <!-- /.content -->
+      </div>
+      <!-- /.content-wrapper -->
+      <!-- Control Sidebar -->
+      <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+      </aside>
+      <!-- /.control-sidebar -->
+      <!-- Main Footer -->
+      <footer class="main-footer">
+        <strong>Copyright &copy; 2025-2026 <span style="color: #ff5733; font-style: italic; font-weight: bold;">Jinesh</span>.</strong>
+        All rights reserved.
+        <div class="float-right d-none d-sm-inline-block">
+          <b>Version</b> 1.0.0
+        </div>
+      </footer>
+    </div>
+    <div class="modal fade"
+         id="createCallModal"
+         tabindex="-1"
+         aria-labelledby="createCallModalLabel"
+         aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="createCallModalLabel">Create New Call</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="createCallForm" method="POST">
+              {% csrf_token %}
+              <!-- First Row -->
+              <div class="form-row">
+                <div class="form-group col-md-4">
+                  <label for="customerName">Customer Name*</label>
+                  <select class="form-control select2bs4" id="customerName" name="customer" required>
+                    <option value="" disabled selected>Select Customer</option>
+                    {% for customer in customers %}
+                      <option value="{{ customer.id }}">{{ customer.company_customer_name }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="amcName">AMC Name</label>
+                  <select class="form-control" id="amcName" name="amc">
+                    <option value="" disabled selected>Select AMC</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="contactNumber">Contact Number*</label>
+                  <input type="text"
+                         class="form-control"
+                         id="contactNumber"
+                         name="contact_number"
+                         readonly
+                         required>
+                </div>
+              </div>
+              <!-- Second Row -->
+              <div class="form-row">
+                <div class="form-group col-md-4">
+                  <label for="callDocumentNumber">Call Document Number</label>
+                  <input type="text"
+                         class="form-control"
+                         id="callDocumentNumber"
+                         name="call_document_number"
+                         placeholder="Enter document number">
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="callType">Call Type*</label>
+                  <select class="form-control" id="callType" name="call_type" required>
+                    <option value="" disabled selected>Select Call Type</option>
+                    <option value="Normal Call">Normal Call</option>
+                    <option value="AMC Call">AMC Call</option>
+                    <option value="Job Call">Job Call</option>
+                    <option value="Service Call">Service Call</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="customerType">Customer Type</label>
+                  <input type="text"
+                         class="form-control"
+                         id="customerType"
+                         name="customer_type"
+                         readonly>
+                </div>
+              </div>
+              <!-- Third Row -->
+              <div class="form-row">
+                <div class="form-group col-md-4">
+                  <label for="amcStatus">AMC Status</label>
+                  <input type="text"
+                         class="form-control"
+                         id="amcStatus"
+                         name="amc_status"
+                         readonly>
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="priority">Priority*</label>
+                  <select class="form-control" id="priority" name="priority" required>
+                    <option value="" disabled selected>Select Priority</option>
+                    <option value="Low">Low</option>
+                    <option value="Medium">Medium</option>
+                    <option value="High">High</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="attendDate">Attend Date*</label>
+                  <input type="datetime-local"
+                         class="form-control"
+                         id="attendDate"
+                         name="attend_date"
+                         required>
+                </div>
+              </div>
+              <!-- Fourth Row -->
+              <div class="form-row">
+                <div class="form-group col-md-4">
+                  <label for="executives">Executives*</label>
+                  <select class="form-control select2"
+                          id="executives"
+                          name="executives"
+                          multiple
+                          required>
+                    <option value="" disabled>Select Executives</option>
+                    {% for executive in executives %}<option value="{{ executive.id }}">{{ executive.first_name }}</option>{% endfor %}
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="notes">Notes</label>
+                  <textarea class="form-control"
+                            id="notes"
+                            name="notes"
+                            rows="3"
+                            placeholder="Enter additional notes"></textarea>
+                </div>
+              </div>
+              <!-- Address Section -->
+              <div class="form-row">
+                <div class="form-group col-md-4">
+                  <label for="address">Address</label>
+                  <input type="text" class="form-control" id="address" name="address" readonly>
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="area">Area</label>
+                  <input type="text" class="form-control" id="area" name="area" readonly>
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="city">City</label>
+                  <input type="text" class="form-control" id="city" name="city" readonly>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-4">
+                  <label for="state">State</label>
+                  <input type="text" class="form-control" id="state" name="state" readonly>
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="zip">Zip</label>
+                  <input type="text" class="form-control" id="zip" name="zip_code" readonly>
+                </div>
+                <div class="form-group col-md-10">
+                  <label for="googleMapUrl">Google Map URL</label>
+                  <input type="text"
+                         class="form-control"
+                         id="googleMapUrl"
+                         name="google_map_url"
+                         readonly>
+                </div>
+              </div>
+              <!-- Notes Section -->
+            </form>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button id="submitCreateCall"
+                      type="submit"
+                      class="btn btn-primary"
+                      form="createCallForm">CREATE</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+      <div class="modal fade"
+           id="editCallModal"
+           tabindex="-1"
+           aria-labelledby="editCallModalLabel"
+           aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="editCallModalLabel">Edit Call</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form id="editCallForm">
+                {% csrf_token %}
+                <input type="hidden" id="editCallId" name="id">
+                <div class="form-row">
+                  <div class="form-group col-md-4">
+                    <label for="editCustomerName">Customer Name</label>
+                    <input type="text"
+                           class="form-control"
+                           id="editCustomerName"
+                           name="customer"
+                           readonly>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="editContactNumber">Contact Number</label>
+                    <input type="text"
+                           class="form-control"
+                           id="editContactNumber"
+                           name="contact_number"
+                           readonly>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="editCallType">Call Type</label>
+                    <select class="form-control" id="editCallType" name="call_type">
+                      <option value="Normal Call">Normal Call</option>
+                      <option value="AMC Call">AMC Call</option>
+                      <option value="Job Call">Job Call</option>
+                      <option value="Service Call">Service Call</option>
                     </select>
                   </div>
                 </div>
-
-                <table id="example1" class="table table-bordered table-striped">
-                  <thead>
-                  <tr>
-                    <th>DETAIL</th>
-                    <th>PROBLEM</th>
-                    <th>CALL TYPE</th>
-                    <th>STATUS</th>
-                    <th>EXECUTIVE(S)</th>
-                    <th>ISSUE DATE</th>
-                    <th>COMPLETE DATE</th>
-                    <th>CUSTOMER CONTACT</th>
-                    <th>ACTIONS</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                    {% for call in calls %}
-                    <tr>
-                        <td>
-                            {{ call.customer__company_customer_name }}<br>
-                            Doc No: {{ call.call_document_number }}<br>
-                            {{ call.amc__amc_name }}
-                        </td>
-                        <td>
-                            Priority: {{ call.priority }}<br>
-                            Note: -
-                        </td>
-                        <td>{{ call.call_type }}</td>
-                        <td>
-                            <span class="badge {% if call.amc__renew_status == 'Active' %}badge-success{% else %}badge-danger{% endif %}">
-                                {{ call.amc__renew_status }}
-                            </span>
-                        </td>
-                        <td>
-                            {% for executive in call.executives__first_name %}
-                                {{ executive }}
-                                {% if not forloop.last %}, {% endif %}
-                            {% endfor %}
-                        </td>
-                        <td>{{ call.attend_date|date:"Y-m-d" }}</td>
-                        <td>{{ call.attend_date|date:"Y-m-d" }}</td>
-                        <td>{{ call.customer__contact_number }}</td>
-                        <td>
-                            <i class="fas fa-edit btn btn-primary btn-sm" data-toggle="modal" data-target="#editCallModal" onclick="populateEditModal(this)"></i>
-                            <a href="/owner/calls/delete/{{ call.id }}" class="btn btn-danger btn-sm">
-                                <i class="fas fa-trash"></i>
-                            </a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-                </table>
-
-
-              </div>
-              <!-- /.card-body -->
+                <div class="form-row">
+                  <div class="form-group col-md-4">
+                    <label for="editPriority">Priority</label>
+                    <select class="form-control" id="editPriority" name="priority">
+                      <option value="Low">Low</option>
+                      <option value="Medium">Medium</option>
+                      <option value="High">High</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="editAttendDate">Attend Date</label>
+                    <input type="datetime-local"
+                           class="form-control"
+                           id="editAttendDate"
+                           name="attend_date">
+                  </div>
+       
+                  
+                  <div class="form-group col-md-4">
+                    <label for="editExecutives">Executives</label>
+                    <select class="form-control select2" id="editExecutives" name="executives" multiple>
+                      {% for executive in executives %}<option value="{{ executive.id }}">{{ executive.first_name }}</option>{% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="editNotes">Notes</label>
+                  <textarea class="form-control" id="editNotes" name="notes" rows="3"></textarea>                  
+                </div>
+                 <div class="form-group col-md-4">
+                    <label for="editStatus">Call Status</label>
+                    <select class="form-control" id="editStatus" name="call_status">
+                      <option value="Pending">Pending</option>
+                      <option value="Completed">Completed</option>
+                      <option value="Rejected">Rejected</option>                      
+                    </select>
+                  </div>
+              </form>
             </div>
-            <!-- /.card -->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button id="saveEditCall" type="button" class="btn btn-primary">Save Changes</button>
+            </div>
           </div>
-          <!-- /.col -->
         </div>
-
       </div>
-      <!-- /.container-fluid -->
-    </div>
-    <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
+      <!-- ./wrapper -->
+      <!-- REQUIRED SCRIPTS -->
+      <!-- jQuery -->
+      <script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+      <!-- Bootstrap -->
+      <script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+      <script src= "{% static 'plugins/datatables/jquery.dataTables.min.js' %}"></script>
+      <script src="{% static 'plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+      <script src="{% static 'plugins/datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
+      <script src="{% static 'plugins/datatables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
+      <script src="{% static 'plugins/datatables-buttons/js/dataTables.buttons.min.js' %}"></script>
+      <script src="{% static 'plugins/datatables-buttons/js/buttons.bootstrap4.min.js' %}"></script>
+      <script src= "{% static 'plugins/jszip/jszip.min.js' %}"></script>
+      <script src= "{% static 'plugins/pdfmake/pdfmake.min.js' %}"></script>
+      <script src= "{% static 'plugins/pdfmake/vfs_fonts.js' %}"></script>
+      <script src="{% static 'plugins/datatables-buttons/js/buttons.html5.min.js' %}"></script>
+      <script src="{% static 'plugins/datatables-buttons/js/buttons.print.min.js' %}"></script>
+      <script src="{% static 'plugins/datatables-buttons/js/buttons.colVis.min.js' %}"></script>
 
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-  </aside>
-  <!-- /.control-sidebar -->
+      <script src="{% static 'plugins/select2/js/select2.full.min.js' %}"></script>
 
-  <!-- Main Footer -->
-  <footer class="main-footer">
-    <strong>Copyright &copy; 2025-2026 <span style="color: #ff5733; font-style: italic; font-weight: bold;">Jinesh</span>.</strong>
-    All rights reserved.
-    <div class="float-right d-none d-sm-inline-block">
-      <b>Version</b> 1.0.0
-    </div>
-  </footer>
-</div>
-
-<div class="modal fade" id="createCallModal" tabindex="-1" aria-labelledby="createCallModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-  <div class="modal-content">
-    <div class="modal-header">
-    <h5 class="modal-title" id="createCallModalLabel">Create New Call</h5>
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-    </div>
-    <div class="modal-body">
-      <form id="createCallForm" method="POST">
-        {% csrf_token %}
-        <!-- First Row -->
-        <div class="form-row">
-        <div class="form-group col-md-4">
-        <label for="customerName">Customer Name*</label>
-        <select class="form-control" id="customerName" name="customer" required>
-        <option value="" disabled selected>Select Customer</option>
-        {% for customer in customers %}
-        <option value="{{ customer.id }}">{{ customer.company_customer_name }}</option>
-        {% endfor %}
-        </select>
-        </div>
-        <div class="form-group col-md-4">
-        <label for="amcName">AMC Name</label>
-        <select class="form-control" id="amcName" name="amc">
-        <option value="" disabled selected>Select AMC</option>
-        </select>
-        </div>
-        <div class="form-group col-md-4">
-        <label for="contactNumber">Contact Number*</label>
-        <input type="text" class="form-control" id="contactNumber" name="contact_number" readonly required>
-        </div>
-        </div>
-        <!-- Second Row -->
-        <div class="form-row">
-        <div class="form-group col-md-4">
-        <label for="callDocumentNumber">Call Document Number</label>
-        <input type="text" class="form-control" id="callDocumentNumber" name="call_document_number" placeholder="Enter document number">
-        </div>
-        <div class="form-group col-md-4">
-        <label for="callType">Call Type*</label>
-        <select class="form-control" id="callType" name="call_type" required>
-        <option value="" disabled selected>Select Call Type</option>
-        <option value="Normal Call">Normal Call</option>
-        <option value="AMC Call">AMC Call</option>
-        <option value="Job Call">Job Call</option>
-        <option value="Service Call">Service Call</option>
-        </select>
-        </div>
-        <div class="form-group col-md-4">
-        <label for="customerType">Customer Type</label>
-        <input type="text" class="form-control" id="customerType" name="customer_type" readonly>
-        </div>
-        </div>
-        <!-- Third Row -->
-        <div class="form-row">
-        <div class="form-group col-md-4">
-        <label for="amcStatus">AMC Status</label>
-        <input type="text" class="form-control" id="amcStatus" name="amc_status" readonly>
-        </div>
-        <div class="form-group col-md-4">
-        <label for="priority">Priority*</label>
-        <select class="form-control" id="priority" name="priority" required>
-        <option value="" disabled selected>Select Priority</option>
-        <option value="Low">Low</option>
-        <option value="Medium">Medium</option>
-        <option value="High">High</option>
-        </select>
-        </div>
-        <div class="form-group col-md-4">
-        <label for="attendDate">Attend Date*</label>
-        <input type="datetime-local" class="form-control" id="attendDate" name="attend_date" required>
-        </div>
-        </div>
-        <!-- Fourth Row -->
-        <div class="form-row">
-        <div class="form-group col-md-4">
-        <label for="executives">Executives*</label>
-        <select class="form-control" id="executives" name="executives" multiple required>
-        <option value="" disabled>Select Executives</option>
-        {% for executive in executives %}
-        <option value="{{ executive.id }}">{{ executive.first_name }}</option>
-        {% endfor %}
-        </select>
-        </div>
-        <div class="form-group">
-          <label for="notes">Notes</label>
-          <textarea class="form-control" id="notes" name="notes" rows="3"  placeholder="Enter additional notes"></textarea>
-        </div>
-        </div>
-        <!-- Address Section -->
-        <div class="form-row">
-        <div class="form-group col-md-4">
-        <label for="address">Address</label>
-        <input type="text" class="form-control" id="address" name="address" readonly>
-        </div>
-        <div class="form-group col-md-4">
-        <label for="area">Area</label>
-        <input type="text" class="form-control" id="area" name="area" readonly>
-        </div>
-        <div class="form-group col-md-4">
-        <label for="city">City</label>
-        <input type="text" class="form-control" id="city" name="city" readonly>
-        </div>
-        </div>
-        <div class="form-row">
-        <div class="form-group col-md-4">
-        <label for="state">State</label>
-        <input type="text" class="form-control" id="state" name="state" readonly>
-        </div>
-        <div class="form-group col-md-4">
-        <label for="zip">Zip</label>
-        <input type="text" class="form-control" id="zip" name="zip_code" readonly>
-        </div>
-        <div class="form-group col-md-10">
-        <label for="googleMapUrl">Google Map URL</label>
-        <input type="text" class="form-control" id="googleMapUrl" name="google_map_url" readonly>
-        </div>
-        </div>
-        <!-- Notes Section -->
-
-        </form>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-    <button id="submitCreateCall" type="submit" class="btn btn-primary" form="createCallForm">CREATE</button>
-    </div>
-  </div>
-  </div>
-</div>
-
-<script>
-  function populateEditModal(element) {
-    const row = $(element).closest('tr');
-    $('#editCustomerName').val(row.find('td:eq(0)').text().trim());
-    $('#editContactNumber').val(row.find('td:eq(7)').text().trim());
-    $('#editCallType').val(row.find('td:eq(2)').text().trim());
-    $('#editPriority').val(row.find('td:eq(1)').text().trim());
-    $('#editExecutives').val(row.find('td:eq(4)').text().trim());
-    // Populate other fields as needed
-  }
-</script>
-
-                      <!-- Edit Call Modal -->
-<div class="modal fade" id="editCallModal" tabindex="-1" aria-labelledby="editCallModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="editCallModalLabel">Edit Call</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form id="editCallForm">
-          <!-- First Row -->
-          <div class="form-row">
-            <div class="form-group col-md-4">
-              <label for="editCustomerName">Customer Name*</label>
-              <select class="form-control" id="editCustomerName" required>
-                <option value="" disabled>Select Customer</option>
-                <option value="Customer1">Customer 1</option>
-                <option value="Customer2">Customer 2</option>
-              </select>
-            </div>
-            <div class="form-group col-md-4">
-              <label for="editAmcName">AMC Name</label>
-              <select class="form-control" id="editAmcName">
-                <option value="" disabled>Select AMC</option>
-                <option value="AMC1">AMC 1</option>
-                <option value="AMC2">AMC 2</option>
-              </select>
-            </div>
-            <div class="form-group col-md-4">
-              <label for="editContactNumber">Contact Number*</label>
-              <input type="text" class="form-control" id="editContactNumber" placeholder="Enter contact number" required>
-            </div>
-          </div>
-          <!-- Second Row -->
-          <div class="form-row">
-            <div class="form-group col-md-4">
-              <label for="editCallDocNumber">Call Document Number</label>
-              <input type="text" class="form-control" id="editCallDocNumber" placeholder="Enter document number">
-            </div>
-            <div class="form-group col-md-4">
-              <label for="editCallType">Call Type*</label>
-              <select class="form-control" id="editCallType" required>
-                <option value="" disabled>Select Call Type</option>
-                <option value="Normal">Normal</option>
-                <option value="AMC">AMC</option>
-              </select>
-            </div>
-            <div class="form-group col-md-4">
-              <label for="editCustomerType">Customer Type</label>
-              <select class="form-control" id="editCustomerType">
-                <option value="" disabled>Select Customer Type</option>
-                <option value="Individual">Individual</option>
-                <option value="Corporate">Corporate</option>
-              </select>
-            </div>
-          </div>
-          <!-- Third Row -->
-          <div class="form-row">
-            <div class="form-group col-md-4">
-              <label for="editAmcStatus">AMC Status</label>
-              <input type="text" class="form-control" id="editAmcStatus" placeholder="Enter AMC status">
-            </div>
-            <div class="form-group col-md-4">
-              <label for="editRemainingDays">Remaining Days</label>
-              <input type="text" class="form-control" id="editRemainingDays" placeholder="Enter remaining days">
-            </div>
-            <div class="form-group col-md-4">
-              <label for="editPriority">Priority*</label>
-              <select class="form-control" id="editPriority" required>
-                <option value="" disabled>Select Priority</option>
-                <option value="Low">Low</option>
-                <option value="Medium">Medium</option>
-                <option value="High">High</option>
-              </select>
-            </div>
-          </div>
-          <!-- Fourth Row -->
-          <div class="form-row">
-            <div class="form-group col-md-4">
-              <label for="editExecutiveDesignation">Executive Designation</label>
-              <input type="text" class="form-control" id="editExecutiveDesignation" placeholder="Enter designation">
-            </div>
-            <div class="form-group col-md-4">
-              <label for="executives">Executives*</label>
-              <select class="form-control" id="executives" name="executives" multiple required>
-                  <option value="" disabled>Select Executives</option>
-                  {% for executive in executives %}
-                  <option value="{{ executive.id }}">{{ executive.first_name }}</option>
-                  {% endfor %}
-              </select>
-            </div>
-            <div class="form-group col-md-4">
-              <label for="editAttendDate">Attend Date</label>
-              <input type="datetime-local" class="form-control" id="editAttendDate">
-            </div>
-          </div>
-          <!-- Address Section -->
-          <div class="form-row">
-            <div class="form-group col-md-4">
-              <label for="editAddress">Address</label>
-              <input type="text" class="form-control" id="editAddress" placeholder="Enter address">
-            </div>
-            <div class="form-group col-md-4">
-              <label for="editArea">Area</label>
-              <input type="text" class="form-control" id="editArea" placeholder="Enter area">
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group col-md-4">
-              <label for="editCity">City</label>
-              <input type="text" class="form-control" id="editCity" placeholder="Enter city">
-            </div>
-            <div class="form-group col-md-4">
-              <label for="editState">State</label>
-              <input type="text" class="form-control" id="editState" placeholder="Enter state">
-            </div>
-            <div class="form-group col-md-4">
-              <label for="editZip">Zip</label>
-              <input type="text" class="form-control" id="editZip" placeholder="Enter zip code">
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group col-md-10">
-              <label for="editGoogleMapUrl">Google Map URL</label>
-              <input type="text" class="form-control" id="editGoogleMapUrl" placeholder="Enter Google Map URL">
-            </div>
-            <div class="form-group col-md-2 align-self-end">
-              <button type="button" class="btn btn-info btn-block">View</button>
-            </div>
-          </div>
-          <!-- Notes Section -->
-          <div class="form-group">
-            <label for="editNotes">Notes</label>
-            <textarea class="form-control" id="editNotes" rows="4" placeholder="Enter additional notes"></textarea>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary" form="editCallForm">SAVE</button>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- ./wrapper -->
-
-<!-- REQUIRED SCRIPTS -->
-
-<!-- jQuery -->
-<script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
-
-<!-- Bootstrap -->
-<script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-
-<script src= "{% static 'plugins/datatables/jquery.dataTables.min.js' %}"></script>
-<script src= "{% static 'plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
-<script src= "{% static 'plugins/datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
-<script src= "{% static 'plugins/datatables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
-<script src= "{% static 'plugins/datatables-buttons/js/dataTables.buttons.min.js' %}"></script>
-<script src= "{% static 'plugins/datatables-buttons/js/buttons.bootstrap4.min.js' %}"></script>
-<script src= "{% static 'plugins/jszip/jszip.min.js' %}"></script>
-<script src= "{% static 'plugins/pdfmake/pdfmake.min.js' %}"></script>
-<script src= "{% static 'plugins/pdfmake/vfs_fonts.js' %}"></script>
-<script src= "{% static 'plugins/datatables-buttons/js/buttons.html5.min.js' %}"></script>
-<script src= "{% static 'plugins/datatables-buttons/js/buttons.print.min.js' %}"></script>
-<script src= "{% static 'plugins/datatables-buttons/js/buttons.colVis.min.js' %}"></script>
-<!-- SweetAlert2 JS -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-<!-- AdminLTE -->
-<script src="{% static 'js/adminlte.js' %}"></script>
-
-<!-- OPTIONAL SCRIPTS -->
-
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="{% static 'js/pages/dashboard3.js' %}"></script>
-<script>
+      <!-- SweetAlert2 JS -->
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+      <!-- AdminLTE -->
+      <script src="{% static 'js/adminlte.js' %}"></script>
+      <!-- OPTIONAL SCRIPTS -->
+      <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+      <script src="{% static 'js/pages/dashboard3.js' %}"></script>
+      <script>
   $(function () {
+
+    $('select:not(.normal)').each(function () {
+      $(this).select2({
+        theme: 'bootstrap4',
+          dropdownParent: $(this).parent()
+      });
+  });
     const table = $("#example1").DataTable({
       "responsive": true, "lengthChange": false, "autoWidth": false,
       "buttons": ["copy", "csv", "pdf", "print", "colvis"]
@@ -687,9 +668,8 @@
       }
     });
   });
-</script>
-
-<script>
+      </script>
+      <script>
     $(document).ready(function () {
         // Handle customer selection
         $("#customerName").on("change", function () {
@@ -797,8 +777,169 @@
                 },
             });
         });
-    });
-</script>
 
-</body>
-</html>
+        // Handle delete button click
+       
+
+        // Function to get CSRF token from cookies
+
+    });
+
+    $(document).on("click", ".delete-call", function () {
+      function getCSRFToken() {
+        let cookieValue = null;
+        const cookies = document.cookie.split(";");
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.startsWith("csrftoken=")) {
+                cookieValue = cookie.substring("csrftoken=".length, cookie.length);
+                break;
+            }
+        }
+        return cookieValue;
+    }
+        console.log("Delete button clicked"); // Debugging log
+        const callId = $(this).data("id");
+        console.log("Call ID:", callId); // Debugging log
+
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#3085d6",
+            confirmButtonText: "Yes, delete it!",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                console.log("Confirmed deletion"); // Debugging log
+                $.ajax({
+                    url: `/owner/calls/delete/${callId}/`,
+                    type: "DELETE",
+                    headers: {
+                        "X-CSRFToken": getCSRFToken(), // Include CSRF token
+                    },
+                    success: function (response) {
+                        console.log("AJAX success response:", response); // Debugging log
+                        if (response.status === "success") {
+                            Swal.fire("Deleteddddddddd!", response.message, "success").then(() => {
+                                location.reload(); // Reload the page to reflect changes
+                            });
+                        } else {
+                            Swal.fire("Error!", response.message, "error");
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("AJAX error:", error); // Debugging log
+                        Swal.fire("Error!", "Failed to delete the call.", "error");
+                    },
+                });
+            }
+        });
+    });
+      </script>
+      <script>
+  $(document).ready(function () {
+    // Handle edit button click
+    $(document).on("click", ".edit-call", function () {
+      console.log("Edit button clicked"); // Debugging log
+      const callId = $(this).data("id");
+      console.log("Call ID:", callId); // Debugging log
+
+      // Populate modal fields
+      $("#editCallId").val(callId);
+      $("#editCustomerName").val($(this).data("customer"));
+      $("#editContactNumber").val($(this).data("contact"));
+      $("#editCallType").val($(this).data("call-type"));
+      $("#editPriority").val($(this).data("priority"));
+      $("#editAttendDate").val($(this).data("attend-date"));
+      $("#editStatus").val($(this).data("status"));
+      $("#editNotes").val($(this).data("notes"));
+
+      // Populate executives dropdown
+      const selectedExecutives = $(this).data("executives").split(",").map(exec => exec.trim()); // Trim each executive name to remove extra spaces
+      console.log("Selected Executives:", selectedExecutives); // Debugging log
+
+      $("#editExecutives option").each(function () {
+          const optionText = $(this).text().trim();
+          console.log("Option Text:", optionText); // Debugging log
+          if (selectedExecutives.includes(optionText)) {
+          $(this).prop("selected", true);
+          } else {
+          $(this).prop("selected", false);
+          }
+      });
+
+      // Show the modal
+      console.log("Opening edit modal"); // Debugging log
+      $(".modal").modal("hide");
+      $('#editCallModal').modal({
+        backdrop: 'static',
+        keyboard: false,
+        show: true
+      });
+    });
+
+    // Handle save button click
+    $("#saveEditCall").on("click", function () {
+      console.log("Save button clicked"); // Debugging log
+      Swal.fire({
+        title: "Are you sure?",
+        text: "Do you want to save the changes?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, save it!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          console.log("Confirmed save changes"); // Debugging log
+          const formData = $("#editCallForm").serialize();
+          console.log("Form data:", formData); // Debugging log
+
+          // Call the API to save changes
+          $.ajax({
+            url: `/owner/calls/edit/`,
+            type: "POST",
+            data: formData,
+            headers: {
+              "X-CSRFToken": getCSRFToken(), // Include CSRF token
+            },
+            success: function (response) {
+              console.log("AJAX success response:", response); // Debugging log
+              if (response.status === "success") {
+                Swal.fire("Saved!", response.message, "success").then(() => {
+                  location.reload(); // Reload the page to reflect changes
+                });
+              } else {
+                Swal.fire("Error!", response.message, "error");
+              }
+            },
+            error: function (xhr, status, error) {
+              console.error("AJAX error:", error); // Debugging log
+              Swal.fire("Error!", "Failed to save changes.", "error");
+            },
+          });
+        }
+      });
+    });
+
+    // Function to get CSRF token from cookies
+    function getCSRFToken() {
+      console.log("Fetching CSRF token"); // Debugging log
+      let cookieValue = null;
+      const cookies = document.cookie.split(";");
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.startsWith("csrftoken=")) {
+          cookieValue = cookie.substring("csrftoken=".length, cookie.length);
+          break;
+        }
+      }
+      console.log("CSRF token:", cookieValue); // Debugging log
+      return cookieValue;
+    }
+  });
+      </script>
+    </body>
+  </html>

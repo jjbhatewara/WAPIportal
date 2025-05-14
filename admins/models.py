@@ -137,9 +137,17 @@ class Call(models.Model):
     call_type = models.CharField(max_length=20, choices=CALL_TYPE_CHOICES)
     priority = models.CharField(max_length=10, choices=PRIORITY_CHOICES, default="Low")
     executive_designation = models.CharField(max_length=100, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
     executives = models.ManyToManyField(Executive, related_name="calls")
     attend_date = models.DateTimeField()
     notes = models.TextField(null=True, blank=True)
+    call_status = models.CharField(
+        max_length=50, 
+        choices=[('Pending', 'Pending'), ('Completed', 'Completed'), ('Rejected', 'Rejected')], 
+        default='Pending'
+    )
+    closed_at = models.DateTimeField(null=True, blank=True)
+    reason = models.TextField(null=True, blank=True)
 
     @property
     def remaining_days(self):
@@ -150,4 +158,34 @@ class Call(models.Model):
 
     def __str__(self):
         return f"Call - {self.customer.company_customer_name} - {self.call_type}"
+
+class JobSheet(models.Model):
+    # Fields
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name="job_sheets")
+    job_sheet_no = models.AutoField(primary_key=True)  # Auto-increment field
+    contact_number = models.CharField(max_length=15, null=False, blank=False)  # Autofilled from Customer
+    model_name_or_number = models.CharField(max_length=255, null=True, blank=True)
+    emi_or_serial_or_part_number = models.CharField(max_length=255, null=True, blank=True)
+    physical_condition = models.CharField(max_length=255, null=True, blank=True)
+    problem = models.TextField(null=True, blank=True)
+    accessories = models.TextField(null=True, blank=True)
+    notes = models.TextField(null=True, blank=True)
+    estimated_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    executives = models.ManyToManyField(Executive, related_name="job_sheets")
+    terms_and_conditions = models.TextField(default="Default")
+    job_status = models.CharField(
+        max_length=50, 
+        choices=[('Pending', 'Pending'), ('Completed', 'Completed'), ('Rejected', 'Rejected')], 
+        default='Pending'
+    )
+    closed_at = models.DateTimeField(null=True, blank=True)
+    reason = models.TextField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Job Sheet - {self.customer.company_customer_name} - {self.job_sheet_no}"
+
+
+
+
 

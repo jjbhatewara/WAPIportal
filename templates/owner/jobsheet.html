@@ -1,0 +1,600 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Evergreen Computers - Job Sheets</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="{% static 'plugins/datatables-bs4/css/dataTables.bootstrap4.min.css'%}">
+  <link rel="stylesheet" href="{% static 'plugins/datatables-responsive/css/responsive.bootstrap4.min.css'%}">
+  <link rel="stylesheet" href="{% static 'plugins/datatables-buttons/css/buttons.bootstrap4.min.css'%}">
+  <link rel="stylesheet" href="{% static 'plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css'%}" >  
+  <!-- Theme style -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+  <link rel="stylesheet" href="{% static 'css/adminlte.css' %}">
+  <link rel="stylesheet" href="{% static 'plugins/select2/css/select2.min.css' %}">
+
+  <style>
+    .select2-container {
+        width: 100% !important; /* Ensure the container takes full width */
+    }
+    .select2-selection {
+        min-width: 200px; /* Set a minimum width for the dropdown */
+        max-width: 100%; /* Prevent it from exceeding the container width */
+    }
+  </style>
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+  <!-- Navbar -->
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="/owner/dashboard" class="nav-link">Home</a>
+      </li>
+    </ul>
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'logout' %}" role="button">
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="/owner/home" class="brand-link">
+      <img src="{% static 'img/eglogo.png' %}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <span class="brand-text font-weight-light">Evergreen</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar user panel (optional) -->
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+          <img src="{% static 'img/jjb.png' %}" class="img-circle elevation-2" alt="User Image">
+        </div>
+        <div class="info">
+          <a href="#" class="d-block">Jinesh Bhatewara</a>
+        </div>
+      </div>
+
+      <!-- SidebarSearch Form -->
+      {% comment %} <div class="form-inline">
+        <div class="input-group" data-widget="sidebar-search">
+          <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+          <div class="input-group-append">
+            <button class="btn btn-sidebar">
+              <i class="fas fa-search fa-fw"></i>
+            </button>
+          </div>
+        </div>
+      </div> {% endcomment %}
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <li class="nav-item">
+            <a href="/owner/dashboard" class="nav-link ">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                Dashboard
+                {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/owner/customers" class="nav-link ">
+              <i class="nav-icon fas fa-user "></i>
+              <p>
+                Customers
+                {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/owner/executives" class="nav-link ">
+              <i class="nav-icon fas fa-walking "></i>
+              <p>
+                Executives
+                {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/owner/call" class="nav-link ">
+              <i class="nav-icon fas fa-phone-alt"></i>
+              <p>
+                Call
+                {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/owner/jobs" class="nav-link active">
+              <i class="nav-icon fas fa-copy"></i>
+              <p>
+                Jobsheets
+                {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/owner/amc" class="nav-link">
+              <i class="nav-icon fas fa-tools"></i>
+              <p>
+                AMC
+                {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
+              </p>
+            </a>
+          </li>
+ 
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- Content Wrapper -->
+  <div class="content-wrapper">
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0">Job Sheets</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">All Job Sheets</h3>
+                <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#createJobSheetModal">
+                  Create Job Sheet
+                </button>
+              </div>
+              <div class="card-body">
+                <table id="example1" class="table table-bordered table-striped">
+                  <thead>
+                  <tr>
+                    <th>DETAIL</th>
+                    <th>PROBLEM</th>
+                    <th>STATUS</th>
+                    <th>EXECUTIVE(S)</th>
+                    <th>ESTIMATED PRICE</th>
+                    <th>ACTIONS</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                    {% for jobsheet in jobsheets %}
+                    <tr>
+                        <td>
+                            {{ jobsheet.customer__company_customer_name }}<br>
+                            Job Sheet No: {{ jobsheet.job_sheet_no }}
+                        </td>
+                        <td>{{ jobsheet.problem }}</td>
+                        <td>{{ jobsheet.physical_condition }}</td>
+                        <td>
+                          {{ jobsheet.executive_names }}
+                            {% comment %} {% for executive in jobsheet.executives__first_name %}
+                                {{ executive }}
+                                {% if not forloop.last %}, {% endif %}
+                            {% endfor %} {% endcomment %}
+                        </td>
+                        <td>{{ jobsheet.estimated_price }}</td>
+                        <td>
+                            <i class="fas fa-edit btn btn-primary btn-sm edit-job-sheet" 
+                               data-job-sheet-no="{{ jobsheet.job_sheet_no }}" 
+                               data-customer="{{ jobsheet.customer__company_customer_name }}" 
+                               data-contact="{{ jobsheet.contact_number }}" 
+                               data-model="{{ jobsheet.model_name_or_number }}" 
+                               data-emi="{{ jobsheet.emi_or_serial_or_part_number }}" 
+                               data-condition="{{ jobsheet.physical_condition }}" 
+                               data-problem="{{ jobsheet.problem }}" 
+                               data-accessories="{{ jobsheet.accessories }}" 
+                                 data-notes="{{ jobsheet.notes }}" 
+                                 data-terms="{{ jobsheet.terms_and_conditions }}" 
+                               data-price="{{ jobsheet.estimated_price }}">
+                            </i>
+                            <button class="btn btn-danger btn-sm delete-job-sheet" data-job-sheet-no="{{ jobsheet.job_sheet_no }}">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Create Job Sheet Modal -->
+  <div class="modal fade" id="createJobSheetModal" tabindex="-1" aria-labelledby="createJobSheetModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="createJobSheetModalLabel">Create New Job Sheet</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="createJobSheetForm" method="POST">
+            {% csrf_token %}
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <label for="customerName">Customer Name*</label>
+                <select class="form-control select2bs4" id="customerName" name="customer" required>
+                  <option value="" disabled selected>Select Customer</option>
+                  {% for customer in customers %}
+                  <option value="{{ customer.id }}">{{ customer.company_customer_name }}</option>
+                  {% endfor %}
+              </select>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="contactNumber">Contact Number*</label>
+                <input type="text" class="form-control" id="contactNumber" name="contact_number" readonly required>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="modelName">Model Name/Number</label>
+                <input type="text" class="form-control" id="modelName" name="model_name_or_number">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <label for="emiNumber">EMI/Serial/Part Number</label>
+                <input type="text" class="form-control" id="emiNumber" name="emi_or_serial_or_part_number">
+              </div>
+              <div class="form-group col-md-4">
+                <label for="physicalCondition">Physical Condition</label>
+                <input type="text" class="form-control" id="physicalCondition" name="physical_condition">
+              </div>
+              <div class="form-group col-md-4">
+                <label for="estimatedPrice">Estimated Price</label>
+                <input type="number" class="form-control" id="estimatedPrice" name="estimated_price" step="0.01">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <label for="executives">Executives*</label>
+                <select class="form-control select2bs4" id="executives" name="executives" multiple required>
+                  {% for executive in executives %}
+                  <option value="{{ executive.id }}">{{ executive.first_name }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="problem">Problem</label>
+                <textarea class="form-control" id="problem" name="problem" rows="3"></textarea>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="accessories">Accessories</label>
+                <textarea class="form-control" id="accessories" name="accessories" rows="3"></textarea>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="notes">Notes</label>
+                <textarea class="form-control" id="notes" name="notes" rows="3"></textarea>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="termsAndConditions">Terms and Conditions</label>
+                <textarea class="form-control" id="termsAndConditions" name="terms_and_conditions" rows="3">Default</textarea>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button id="submitCreateJobSheet" type="submit" class="btn btn-primary" form="createJobSheetForm">CREATE</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Job Sheet Modal -->
+  <div class="modal fade" id="editJobSheetModal" tabindex="-1" aria-labelledby="editJobSheetModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editJobSheetModalLabel">Edit Job Sheet</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="editJobSheetForm">
+                    {% csrf_token %}
+                    <input type="hidden" id="editJobSheetId" name="id">
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="editJobSheetNo">Job Sheet No</label>
+                            <input type="text" class="form-control" id="editJobSheetNo" name="job_sheet_no" readonly>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="editCustomerName">Customer Name</label>
+                            <input type="text" class="form-control" id="editCustomerName" name="customer" readonly>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="editContactNumber">Contact Number</label>
+                            <input type="text" class="form-control" id="editContactNumber" name="contact_number" readonly>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="editModelName">Model Name/Number</label>
+                            <input type="text" class="form-control" id="editModelName" name="model_name_or_number">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="editEmiNumber">EMI/Serial/Part Number</label>
+                            <input type="text" class="form-control" id="editEmiNumber" name="emi_or_serial_or_part_number">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="editPhysicalCondition">Physical Condition</label>
+                            <input type="text" class="form-control" id="editPhysicalCondition" name="physical_condition">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="editEstimatedPrice">Estimated Price</label>
+                            <input type="number" class="form-control" id="editEstimatedPrice" name="estimated_price" step="0.01">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="editExecutives">Executives*</label>
+                            <select class="form-control select2bs4" id="editExecutives" name="executives" multiple>
+                                {% for executive in executives %}
+                                <option value="{{ executive.id }}">{{ executive.first_name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="editProblem">Problem</label>
+                            <textarea class="form-control" id="editProblem" name="problem" rows="3"></textarea>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="editAccessories">Accessories</label>
+                            <textarea class="form-control" id="editAccessories" name="accessories" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="editNotes">Notes</label>
+                            <textarea class="form-control" id="editNotes" name="notes" rows="3"></textarea>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="editTermsAndConditions">Terms and Conditions</label>
+                            <textarea class="form-control" id="editTermsAndConditions" name="terms_and_conditions" rows="3"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button id="saveEditJobSheet" type="button" class="btn btn-primary">Save Changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- REQUIRED SCRIPTS -->
+<script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'plugins/datatables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+<script src="{% static 'plugins/datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
+<script src="{% static 'plugins/datatables-buttons/js/dataTables.buttons.min.js' %}"></script>
+<script src="{% static 'plugins/datatables-buttons/js/buttons.bootstrap4.min.js' %}"></script>
+<script src="{% static 'plugins/jszip/jszip.min.js' %}"></script>
+<script src="{% static 'plugins/pdfmake/pdfmake.min.js' %}"></script>
+<script src="{% static 'plugins/pdfmake/vfs_fonts.js' %}"></script>
+<script src="{% static 'plugins/datatables-buttons/js/buttons.html5.min.js' %}"></script>
+<script src="{% static 'plugins/datatables-buttons/js/buttons.print.min.js' %}"></script>
+<script src="{% static 'plugins/datatables-buttons/js/buttons.colVis.min.js' %}"></script>
+<script src="{% static 'js/adminlte.js' %}"></script>
+
+<script src="{% static 'plugins/select2/js/select2.full.min.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+  $(function () {
+    $('select:not(.normal)').each(function () {
+      $(this).select2({
+        theme: 'bootstrap4',
+          dropdownParent: $(this).parent()
+      });
+  });
+    const table = $("#example1").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "buttons": ["copy", "csv", "pdf", "print", "colvis"]
+    });
+
+    table.buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+  });
+
+  // Handle form submission for creating a new job sheet
+  $("#createJobSheetForm").on("submit", function (e) {
+    e.preventDefault();
+    const createButton = $("#submitCreateJobSheet");
+    createButton.prop("disabled", true).text("Creating...");
+    const formData = $(this).serialize();
+
+    $.ajax({
+      url: "/owner/jobsheets/create/",
+      type: "POST",
+      data: formData,
+      success: function (response) {
+        if (response.status === "success") {
+          Swal.fire("Success!", response.message, "success").then(() => {
+            $("#createJobSheetModal").modal("hide");
+            location.reload();
+          });
+        } else {
+          Swal.fire("Error!", response.message, "error");
+        }
+      },
+      error: function () {
+        Swal.fire("Error!", "An error occurred while creating the job sheet.", "error");
+      },
+      complete: function () {
+        createButton.prop("disabled", false).text("CREATE");
+      },
+    });
+  });
+
+  $(document).ready(function () {
+    // Handle customer selection
+    $("#customerName").on("change", function () {
+      const customerId = $(this).val();
+
+      if (customerId) {
+        // Fetch customer details
+        $.ajax({
+          url: `/owner/customers/${customerId}/`,
+          type: "GET",
+          success: function (response) {
+            if (response.status === "success") {
+              // Populate the contact number field
+              $("#contactNumber").val(response.customer.contact_number);
+              console.log(response.customer.contact_number);
+            } else {
+              Swal.fire("Error!", response.message, "error");
+            }
+          },
+          error: function () {
+            Swal.fire("Error!", "Failed to fetch customer details.", "error");
+          }
+        });
+      } else {
+        // Clear the contact number field if no customer is selected
+        $("#contactNumber").val("");
+      }
+    });
+  });
+</script>
+<script>
+  $(document).ready(function () {
+    // Handle delete button click
+    $(".delete-job-sheet").on("click", function () {
+      const jobSheetNo = $(this).data("job-sheet-no");
+
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Yes, delete it!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Call the API to delete the JobSheet
+          $.ajax({
+            url: `/owner/jobsheets/delete/${jobSheetNo}/`,
+            type: "DELETE",
+            success: function (response) {
+              if (response.status === "success") {
+                Swal.fire("Deleted!", response.message, "success").then(() => {
+                  location.reload(); // Reload the page to reflect changes
+                });
+              } else {
+                Swal.fire("Error!", response.message, "error");
+              }
+            },
+            error: function () {
+              Swal.fire("Error!", "Failed to delete the JobSheet.", "error");
+            },
+          });
+        }
+      });
+    });
+  });
+</script>
+<script>
+  $(document).ready(function () {
+    // Handle edit button click
+    $(".edit-job-sheet").on("click", function () {
+      const jobSheetNo = $(this).data("job-sheet-no");
+      $("#editJobSheetNo").val(jobSheetNo);
+      $("#editCustomerName").val($(this).data("customer"));
+      $("#editContactNumber").val($(this).data("contact"));
+      $("#editModelName").val($(this).data("model"));
+      $("#editEmiNumber").val($(this).data("emi"));
+      $("#editPhysicalCondition").val($(this).data("condition"));
+      $("#editEstimatedPrice").val($(this).data("price"));
+      $("#editProblem").val($(this).data("problem"));
+      $("#editAccessories").val($(this).data("accessories"));
+      $("#editNotes").val($(this).data("notes"));
+      $("#editTermsAndConditions").val($(this).data("terms"));
+
+      // Show the modal
+      $("#editJobSheetModal").modal("show");
+    });
+
+    // Handle save button click
+    $("#saveEditJobSheet").on("click", function () {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "Do you want to save the changes?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, save it!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const jobSheetNo = $("#editJobSheetNo").val();
+          const formData = $("#editJobSheetForm").serialize();
+
+          // Call the API to save changes
+          $.ajax({
+            url: `/owner/jobsheets/edit/${jobSheetNo}/`,
+            type: "POST",
+            data: formData,
+            success: function (response) {
+              if (response.status === "success") {
+                Swal.fire("Saved!", response.message, "success").then(() => {
+                  location.reload(); // Reload the page to reflect changes
+                });
+              } else {
+                Swal.fire("Error!", response.message, "error");
+              }
+            },
+            error: function () {
+              Swal.fire("Error!", "Failed to save changes.", "error");
+            },
+          });
+        }
+      });
+    });
+  });
+</script>
+</body>
+</html>

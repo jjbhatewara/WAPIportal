@@ -27,6 +27,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', login, name='login'),  # URL for the login view
     path('owner/', include('admins.urls')),
+    path('exec/', include('exec.urls')),
     path('', logout, name='logout'),
 ]
 if settings.DEBUG:

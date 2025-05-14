@@ -177,24 +177,7 @@
               </p>
             </a>
           </li>
-          <li class="nav-item">
-            <a href="/owner/todo" class="nav-link">
-              <i class="nav-icon fas fa-list-ol"></i>
-              <p>
-                To Do List
-                {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="/owner/settings" class="nav-link">
-              <i class="nav-icon fas fa-cog"></i>
-              <p>
-                Settings
-                {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
-              </p>
-            </a>
-          </li>
+
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
@@ -296,8 +279,8 @@
                     </select>
                     </div>
                     <div class="form-group col-md-4">
-                    <label for="executiveDOB">DOB</label>
-                    <input type="date" class="form-control" id="executiveDOB" name="dob">
+                    <label for="executiveDOB">DOB*</label>
+                    <input type="date" class="form-control" id="executiveDOB" name="dob" required>
                     </div>
                     </div>
                     <div class="form-row">
@@ -705,3 +688,4 @@
 </script>
 </body>
 </html>
+

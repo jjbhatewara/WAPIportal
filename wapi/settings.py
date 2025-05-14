@@ -17,7 +17,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 ALLOWED_HOSTS = [
-    'wapiportal-production.up.railway.app',
+    'wapiportal-production.up.railway.app','*'
 ]
 
 CSRF_TRUSTED_ORIGINS = [
@@ -45,8 +45,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    "admins",
-    "wapi"
+    "wapi",
+    "admins",    
+    "exec"
 ]
 
 MIDDLEWARE = [
@@ -58,6 +59,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'wapi.middleware.RoleBasedAccessControlMiddleware',
 ]
 
 ROOT_URLCONF = 'wapi.urls'
