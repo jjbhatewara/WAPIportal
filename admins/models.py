@@ -132,8 +132,8 @@ class Call(models.Model):
 
     # Fields
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name="calls")
-    amc = models.ForeignKey(AMC, on_delete=models.CASCADE, related_name="calls", null=True, blank=True)
-    call_document_number = models.CharField(max_length=100, null=True, blank=True)
+    amc = models.ForeignKey(AMC, on_delete=models.CASCADE, related_name="calls", null=True, blank=True)  # Set to null by default
+    call_document_number = models.CharField(max_length=100, null=True, blank=True)  # Set to null by default
     call_type = models.CharField(max_length=20, choices=CALL_TYPE_CHOICES)
     priority = models.CharField(max_length=10, choices=PRIORITY_CHOICES, default="Low")
     executive_designation = models.CharField(max_length=100, null=True, blank=True)
@@ -144,7 +144,8 @@ class Call(models.Model):
     call_status = models.CharField(
         max_length=50, 
         choices=[('Pending', 'Pending'), ('Completed', 'Completed'), ('Rejected', 'Rejected')], 
-        default='Pending'
+        default='Pending',
+        null=True, blank=True  # Set to null by default
     )
     closed_at = models.DateTimeField(null=True, blank=True)
     reason = models.TextField(null=True, blank=True)

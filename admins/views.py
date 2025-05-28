@@ -752,9 +752,9 @@ def create_call(request):
         try:
             # Retrieve form data
             customer_id = request.POST.get("customer")
-            amc_id = request.POST.get("amc")
+            # amc_id = request.POST.get("amc")
             # contact_number = request.POST.get("contact_number")
-            call_document_number = request.POST.get("call_document_number")
+            # call_document_number = request.POST.get("call_document_number")
             call_type = request.POST.get("call_type")
             # customer_type = request.POST.get("customer_type")
             priority = request.POST.get("priority")
@@ -770,13 +770,13 @@ def create_call(request):
 
             # Get the Customer and AMC objects
             customer = get_object_or_404(Customer, id=customer_id)
-            amc = get_object_or_404(AMC, id=amc_id) if amc_id else None
+            # amc = get_object_or_404(AMC, id=amc_id) if amc_id else None
 
             # Create the Call object
             call = Call.objects.create(
                 customer=customer,
-                amc=amc,
-                call_document_number=call_document_number,
+                # amc=amc,
+                # call_document_number=call_document_number,
                 call_type=call_type,
                 priority=priority,
                 attend_date=attend_date,

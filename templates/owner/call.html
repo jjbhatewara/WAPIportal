@@ -286,8 +286,6 @@
                             <td>
                               {{ call.customer__company_customer_name }}
                               <br>
-                              Doc No: {{ call.call_document_number }}
-                              <br>
                               {{ call.amc__amc_name }}
                             </td>
                             <td>
@@ -380,31 +378,16 @@
                   </select>
                 </div>
                 <div class="form-group col-md-4">
-                  <label for="amcName">AMC Name</label>
-                  <select class="form-control" id="amcName" name="amc">
-                    <option value="" disabled selected>Select AMC</option>
-                  </select>
+                  <label for="contactNumber">Contact Number*</label>
+                  <input type="text" class="form-control" id="contactNumber" name="contact_number" readonly required>
                 </div>
                 <div class="form-group col-md-4">
-                  <label for="contactNumber">Contact Number*</label>
-                  <input type="text"
-                         class="form-control"
-                         id="contactNumber"
-                         name="contact_number"
-                         readonly
-                         required>
+                  <label for="customerType">Customer Type</label>
+                  <input type="text" class="form-control" id="customerType" name="customer_type" readonly>
                 </div>
               </div>
               <!-- Second Row -->
               <div class="form-row">
-                <div class="form-group col-md-4">
-                  <label for="callDocumentNumber">Call Document Number</label>
-                  <input type="text"
-                         class="form-control"
-                         id="callDocumentNumber"
-                         name="call_document_number"
-                         placeholder="Enter document number">
-                </div>
                 <div class="form-group col-md-4">
                   <label for="callType">Call Type*</label>
                   <select class="form-control" id="callType" name="call_type" required>
@@ -414,25 +397,6 @@
                     <option value="Job Call">Job Call</option>
                     <option value="Service Call">Service Call</option>
                   </select>
-                </div>
-                <div class="form-group col-md-4">
-                  <label for="customerType">Customer Type</label>
-                  <input type="text"
-                         class="form-control"
-                         id="customerType"
-                         name="customer_type"
-                         readonly>
-                </div>
-              </div>
-              <!-- Third Row -->
-              <div class="form-row">
-                <div class="form-group col-md-4">
-                  <label for="amcStatus">AMC Status</label>
-                  <input type="text"
-                         class="form-control"
-                         id="amcStatus"
-                         name="amc_status"
-                         readonly>
                 </div>
                 <div class="form-group col-md-4">
                   <label for="priority">Priority*</label>
@@ -445,33 +409,23 @@
                 </div>
                 <div class="form-group col-md-4">
                   <label for="attendDate">Attend Date*</label>
-                  <input type="datetime-local"
-                         class="form-control"
-                         id="attendDate"
-                         name="attend_date"
-                         required>
+                  <input type="datetime-local" class="form-control" id="attendDate" name="attend_date" required>
                 </div>
               </div>
-              <!-- Fourth Row -->
+              <!-- Third Row -->
               <div class="form-row">
                 <div class="form-group col-md-4">
                   <label for="executives">Executives*</label>
-                  <select class="form-control select2"
-                          id="executives"
-                          name="executives"
-                          multiple
-                          required>
+                  <select class="form-control select2" id="executives" name="executives" multiple required>
                     <option value="" disabled>Select Executives</option>
-                    {% for executive in executives %}<option value="{{ executive.id }}">{{ executive.first_name }}</option>{% endfor %}
+                    {% for executive in executives %}
+                    <option value="{{ executive.id }}">{{ executive.first_name }}</option>
+                    {% endfor %}
                   </select>
                 </div>
-                <div class="form-group">
+                <div class="form-group col-md-8">
                   <label for="notes">Notes</label>
-                  <textarea class="form-control"
-                            id="notes"
-                            name="notes"
-                            rows="3"
-                            placeholder="Enter additional notes"></textarea>
+                  <textarea class="form-control" id="notes" name="notes" rows="3"></textarea>
                 </div>
               </div>
               <!-- Address Section -->
@@ -493,10 +447,6 @@
                 <div class="form-group col-md-4">
                   <label for="state">State</label>
                   <input type="text" class="form-control" id="state" name="state" readonly>
-                </div>
-                <div class="form-group col-md-4">
-                  <label for="zip">Zip</label>
-                  <input type="text" class="form-control" id="zip" name="zip_code" readonly>
                 </div>
                 <div class="form-group col-md-10">
                   <label for="googleMapUrl">Google Map URL</label>
@@ -580,27 +530,21 @@
                            id="editAttendDate"
                            name="attend_date">
                   </div>
-       
-                  
                   <div class="form-group col-md-4">
                     <label for="editExecutives">Executives</label>
                     <select class="form-control select2" id="editExecutives" name="executives" multiple>
-                      {% for executive in executives %}<option value="{{ executive.id }}">{{ executive.first_name }}</option>{% endfor %}
+                      {% for executive in executives %}
+                      <option value="{{ executive.id }}">{{ executive.username }}</option>
+                      {% endfor %}
                     </select>
                   </div>
                 </div>
-                <div class="form-group">
-                  <label for="editNotes">Notes</label>
-                  <textarea class="form-control" id="editNotes" name="notes" rows="3"></textarea>                  
-                </div>
-                 <div class="form-group col-md-4">
-                    <label for="editStatus">Call Status</label>
-                    <select class="form-control" id="editStatus" name="call_status">
-                      <option value="Pending">Pending</option>
-                      <option value="Completed">Completed</option>
-                      <option value="Rejected">Rejected</option>                      
-                    </select>
+                <div class="form-row">
+                  <div class="form-group col-md-12">
+                    <label for="editNotes">Notes</label>
+                    <textarea class="form-control" id="editNotes" name="notes" rows="3"></textarea>
                   </div>
+                </div>
               </form>
             </div>
             <div class="modal-footer">
